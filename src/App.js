@@ -93,8 +93,16 @@ function Header() {
   return (
     <div className="px-4 py-4 text-white flex items-center gap-3 shadow-lg"
       style={{ background: "linear-gradient(135deg,#6b7280 0%,#9ca3af 50%,#ec4899 100%)" }}>
-      <div className="w-11 h-11 rounded-xl bg-white/20 border-2 border-white/40 flex items-center justify-center overflow-hidden">
-        <img src="/logo.png" alt="CEC" className="w-full h-full object-contain" /></div>
+      <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden flex-shrink-0">
+        <img src="/logo.png" alt="CEC" className="w-full h-full object-contain p-1" />
+      </div>
+      <div>
+        <div className="font-bold text-base leading-tight">CEC Sailly-sur-la-Lys</div>
+        <div className="text-white/70 text-xs">Club d'Éducation Canine</div>
+      </div>
+    </div>
+  );
+}
 
 function Home({ setTab }) {
   return (
