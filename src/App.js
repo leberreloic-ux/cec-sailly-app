@@ -258,6 +258,28 @@ function Agenda({ events, setEvents }) {
 }
 
 function Facebook() {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const PAGE_ID = "587854675045442";
+  const TOKEN = process.env.REACT_APP_FB_TOKEN;
+
+  useState(() => {
+    fetch(`https://graph.facebook.com/v19.0/${PAGE_ID}/posts?fields=message,created_time,likes.summary(true),comments.summary(true)&access_token=${TOKEN}`)
+      .then(r => r.json())
+      .then(data => {
+        if (data.data) { setPosts(data.data.slice(0, 5)); }
+        else { setError(true); }
+        setLoading(false);
+      })
+      .catch(() => { setError(true); setLoading(false); });
+  }, []);
+
+  const formatDate = (d) => {
+    const date = new Date(d);
+    return date.toLocaleDateString("fr-FR", { day: "numeric", month: "long" });
+  };
+
   return (
     <div style={S.page}>
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -268,19 +290,21 @@ function Facebook() {
       <div style={{ borderRadius: 12, padding: "8px 12px", fontSize: 12, border: "1px solid #f9a8d4", background: "#fce7f3", color: "#be185d" }}>
         Connecté à : <strong>CEC Sailly-sur-la-Lys</strong>
       </div>
-      {FB_POSTS.map(p => (
+      {loading && <div style={{ textAlign: "center", padding: 32, color: "#9ca3af" }}>🐾 Chargement des posts…</div>}
+      {error && <div style={{ textAlign: "center", padding: 32, color: "#9ca3af", fontSize: 14 }}>Impossible de charger les posts.<br />Vérifiez le token Facebook.</div>}
+      {posts.map(p => (
         <div key={p.id} style={{ ...S.card, display: "flex", flexDirection: "column", gap: 8 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <div style={{ width: 32, height: 32, borderRadius: "50%", background: "linear-gradient(135deg,#6b7280,#ec4899)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 11, fontWeight: "bold" }}>CEC</div>
             <div>
               <div style={{ fontSize: 12, fontWeight: 600, color: "#1f2937" }}>CEC Sailly-sur-la-Lys</div>
-              <div style={{ fontSize: 11, color: "#9ca3af" }}>{p.time}</div>
+              <div style={{ fontSize: 11, color: "#9ca3af" }}>{formatDate(p.created_time)}</div>
             </div>
           </div>
-          <p style={{ fontSize: 14, color: "#374151", lineHeight: 1.5 }}>{p.text}</p>
+          <p style={{ fontSize: 14, color: "#374151", lineHeight: 1.5 }}>{p.message}</p>
           <div style={{ display: "flex", gap: 16, paddingTop: 8, borderTop: "1px solid #f9fafb" }}>
-            <span style={{ fontSize: 12, color: "#9ca3af" }}>👍 {p.likes}</span>
-            <span style={{ fontSize: 12, color: "#9ca3af" }}>💬 {p.comments}</span>
+            <span style={{ fontSize: 12, color: "#9ca3af" }}>👍 {p.likes?.summary?.total_count || 0}</span>
+            <span style={{ fontSize: 12, color: "#9ca3af" }}>💬 {p.comments?.summary?.total_count || 0}</span>
           </div>
         </div>
       ))}
