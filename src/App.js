@@ -399,7 +399,13 @@ function Contact() {
         <div style={{ fontSize:14, fontWeight:600, color:"#374151" }}>Email</div>
         <a href="mailto:saillysurlalys.cec@gmail.com" style={{ fontSize:14, color:"#ec4899", wordBreak:"break-all", textDecoration:"none" }}>saillysurlalys.cec@gmail.com</a>
         <div style={{ fontSize:14, fontWeight:600, color:"#374151", marginTop:8 }}>Horaires d'entraînement</div>
-        <div style={{ fontSize:14, color:"#4b5563" }}>Samedi : 09h00 – 12h00<br />Mercredi : 19h00 – 21h00</div>
+        <div style={{ fontSize:14, color:"#4b5563", lineHeight:1.8 }}>
+          🐕 <strong>Dimanche matin</strong><br />
+          09h30 – 10h30 : chiens de plus de 9 mois<br />
+          11h00 – 12h00 : chiens de moins de 9 mois<br /><br />
+          📅 <strong>Mercredi</strong><br />
+          17h30 – 18h30 : sur demande
+        </div>
       </div>
     </div>
   );
