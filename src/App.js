@@ -4,43 +4,33 @@ const TABS = ["Accueil", "Actualités", "Agenda", "Facebook", "Carte", "Astuces"
 const ICONS = ["🏠", "🔔", "📅", "📘", "💳", "💡", "📞"];
 const ADMIN_PIN = "1411";
 
-const NEWS_INIT = [
-  { id: 1, date: "20 mars 2026", title: "Entraînement annulé", body: "L'entraînement du samedi 21 mars est annulé en raison des conditions météo. Reprise le 28 mars.", tag: "Info" },
-  { id: 2, date: "15 mars 2026", title: "Concours régional", body: "Inscriptions ouvertes pour le concours régional d'obéissance le 12 avril. Contactez le bureau.", tag: "Événement" },
-];
-
 const TAG_COLORS = {
   Info: "bg-gray-100 text-gray-600",
-  Événement: "bg-fuchsia-100 text-fuchsia-700",
+  "Événement": "bg-fuchsia-100 text-fuchsia-700",
   Horaires: "bg-pink-100 text-pink-700",
 };
 
 const FB_POSTS = [
-  { id: 1, time: "Il y a 2h", text: "🐕 Super séance d'agilité ce matin avec nos jeunes chiens ! Bravo à tous les maîtres pour leur implication. À samedi !", likes: 24, comments: 5 },
-  { id: 2, time: "Il y a 1 jour", text: "📅 Rappel : réunion de bureau mardi 24 mars à 20h à la salle des fêtes. Tous les membres sont les bienvenus.", likes: 12, comments: 2 },
-];
-
-const INIT_EVENTS = [
-  { id: 1, date: "28 mars", day: "Sam", title: "Reprise entraînement", time: "09h00 – 12h00", place: "Rue de la Gare, Sailly-sur-la-Lys" },
-  { id: 2, date: "12 avr.", day: "Dim", title: "Concours régional obéissance", time: "08h30 – 17h00", place: "Stade de Lille" },
+  { id: 1, time: "Il y a 2h", text: "Super séance d'agilité ce matin avec nos jeunes chiens ! Bravo à tous les maîtres. À samedi !", likes: 24, comments: 5 },
+  { id: 2, time: "Il y a 1 jour", text: "Rappel : réunion de bureau mardi 24 mars à 20h à la salle des fêtes. Tous les membres sont les bienvenus.", likes: 12, comments: 2 },
 ];
 
 const ASTUCES = [
-  { id: 1, emoji: "🐕", titre: "Gérer l'agressivité du chien en laisse", résumé: "Stratégies et Fleurs de Bach pour garder son sang-froid en balade face à la réactivité en laisse.", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/agressivite-chien-laisse-fleurs-de-bach" },
-  { id: 2, emoji: "🧦", titre: "Mon chien a mangé une chaussette", résumé: "Chiot ou adulte, votre chien peut avaler un vêtement. Que faire si vous le prenez sur le fait ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-mangé-une-chaussette" },
-  { id: 3, emoji: "🧴", titre: "Mon chien a bu du détergent", résumé: "La maison peut être dangereuse pour votre chien. Que faire en cas d'ingestion de produit ménager ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-bu-du-détergent" },
-  { id: 4, emoji: "🕷️", titre: "Les tiques", résumé: "La tique est un acarien parasite qui guette le passage d'un hôte. Comment la reconnaître et la retirer ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/les-tiques" },
-  { id: 5, emoji: "🐸", titre: "Mon chien a mangé un crapaud", résumé: "Nos compagnons sont très curieux et peuvent tomber nez à nez avec un crapaud. Les bons réflexes.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-mangé-un-crapaud" },
-  { id: 6, emoji: "🩹", titre: "Mon chien s'est fait une plaie", résumé: "Comme nous, les chiens peuvent se blesser. En fonction de la gravité, voici comment réagir.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-s-est-fait-une-plaie" },
-  { id: 7, emoji: "🪼", titre: "Piqûre de méduse", résumé: "Vous emmenez votre chien à la mer ? Voici quoi faire en cas de contact avec une méduse.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/piqûre-de-méduse" },
-  { id: 8, emoji: "🐾", titre: "Coupure du coussinet", résumé: "En promenade ou à la maison, votre chien peut s'ouvrir les coussinets. Les gestes à adopter.", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/coupure-du-coussinet" },
-  { id: 9, emoji: "🐝", titre: "Piqûre de guêpe ou abeille", résumé: "La curiosité de nos compagnons peut leur coûter cher face à une guêpe ou une abeille.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/piqûre-de-guêpe-ou-abeille" },
-  { id: 10, emoji: "🐶", titre: "Morsures entre congénères", résumé: "Les chiens ne peuvent pas toujours s'entendre. Comment réagir en cas de morsure par un autre chien ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/morsures-congénères" },
-  { id: 11, emoji: "🔥", titre: "Brûlures", résumé: "Barbecue, huile de friture ou sol trop chaud : comment soigner une brûlure chez le chien.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/brulures" },
-  { id: 12, emoji: "🐍", titre: "Morsure de serpent", résumé: "En France, les vipères sont dangereuses pour nos chiens. Les bons réflexes si cela arrive.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-s-est-fait-mordre-par-un-serpent" },
-  { id: 13, emoji: "🚗", titre: "Mon chien a été percuté par une voiture", résumé: "Si votre chien se fait renverser, voici la marche à suivre pour ne pas aggraver la situation.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-été-percuté-par-une-voiture" },
-  { id: 14, emoji: "🤕", titre: "Mon chien boîte : entorse", résumé: "Comme pour l'humain, une entorse peut être plus ou moins grave. Comment la reconnaître ?", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/mon-chien-boîte-entorse" },
-  { id: 15, emoji: "🚙", titre: "Mon chien est malade en voiture", résumé: "Vomissements, salivation, prostration : les solutions pour que les trajets se passent mieux.", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/mon-chien-est-malade-en-voiture" },
+  { id: 1, emoji: "🐕", titre: "Gérer l'agressivité du chien en laisse", resume: "Stratégies et Fleurs de Bach pour garder son sang-froid en balade face à la réactivité en laisse.", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/agressivite-chien-laisse-fleurs-de-bach" },
+  { id: 2, emoji: "🧦", titre: "Mon chien a mangé une chaussette", resume: "Chiot ou adulte, votre chien peut avaler un vêtement. Que faire si vous le prenez sur le fait ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-mang%C3%A9-une-chaussette" },
+  { id: 3, emoji: "🧴", titre: "Mon chien a bu du détergent", resume: "La maison peut être dangereuse pour votre chien. Que faire en cas d'ingestion de produit ménager ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-bu-du-d%C3%A9tergent" },
+  { id: 4, emoji: "🕷️", titre: "Les tiques", resume: "La tique est un acarien parasite qui guette le passage d'un hôte. Comment la reconnaître et la retirer ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/les-tiques" },
+  { id: 5, emoji: "🐸", titre: "Mon chien a mangé un crapaud", resume: "Nos compagnons sont très curieux et peuvent tomber nez à nez avec un crapaud. Les bons réflexes.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-mang%C3%A9-un-crapaud" },
+  { id: 6, emoji: "🩹", titre: "Mon chien s'est fait une plaie", resume: "Comme nous, les chiens peuvent se blesser. En fonction de la gravité, voici comment réagir.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-s-est-fait-une-plaie" },
+  { id: 7, emoji: "🪼", titre: "Piqure de méduse", resume: "Vous emmenez votre chien à la mer ? Voici quoi faire en cas de contact avec une méduse.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/piq%C3%BBre-de-m%C3%A9duse" },
+  { id: 8, emoji: "🐾", titre: "Coupure du coussinet", resume: "En promenade ou à la maison, votre chien peut s'ouvrir les coussinets. Les gestes à adopter.", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/coupure-du-coussinet" },
+  { id: 9, emoji: "🐝", titre: "Piqure de guêpe ou abeille", resume: "La curiosité de nos compagnons peut leur coûter cher face à une guêpe ou une abeille.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/piq%C3%BBre-de-gu%C3%AApe-ou-abeille" },
+  { id: 10, emoji: "🐶", titre: "Morsures entre congénères", resume: "Les chiens ne peuvent pas toujours s'entendre. Comment réagir en cas de morsure par un autre chien ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/morsures-cong%C3%A9n%C3%A8res" },
+  { id: 11, emoji: "🔥", titre: "Brulures", resume: "Barbecue, huile de friture ou sol trop chaud : comment soigner une brûlure chez le chien.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/brulures" },
+  { id: 12, emoji: "🐍", titre: "Morsure de serpent", resume: "En France, les vipères sont dangereuses pour nos chiens. Les bons réflexes si cela arrive.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-s-est-fait-mordre-par-un-serpent" },
+  { id: 13, emoji: "🚗", titre: "Mon chien a été percuté par une voiture", resume: "Si votre chien se fait renverser, voici la marche à suivre pour ne pas aggraver la situation.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-%C3%A9t%C3%A9-percut%C3%A9-par-une-voiture" },
+  { id: 14, emoji: "🤕", titre: "Mon chien boite : entorse", resume: "Comme pour l'humain, une entorse peut être plus ou moins grave. Comment la reconnaître ?", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/mon-chien-bo%C3%AEte-entorse" },
+  { id: 15, emoji: "🚙", titre: "Mon chien est malade en voiture", resume: "Vomissements, salivation, prostration : les solutions pour que les trajets se passent mieux.", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/mon-chien-est-malade-en-voiture" },
 ];
 
 const TAG_ASTUCES = {
@@ -60,8 +50,8 @@ function PinModal({ onSuccess, onCancel }) {
     }
   };
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-3xl p-6 w-full max-w-xs shadow-xl">
+    <div className="fixed inset-0 flex items-center justify-center z-50 p-4" style={{ background: "rgba(0,0,0,0.5)" }}>
+      <div className="bg-white rounded-3xl p-6 w-full shadow-xl" style={{ maxWidth: "320px" }}>
         <div className="text-center mb-4">
           <div className="text-2xl mb-1">🔐</div>
           <div className="font-bold text-gray-800">Code administrateur</div>
@@ -69,21 +59,21 @@ function PinModal({ onSuccess, onCancel }) {
         </div>
         <div className="flex justify-center gap-3 mb-4">
           {[0,1,2,3].map(i => (
-            <div key={i} className={`w-10 h-10 rounded-full border-2 flex items-center justify-center text-lg font-bold transition-colors ${error ? "border-red-400 bg-red-50" : pin.length > i ? "border-fuchsia-500 bg-fuchsia-50" : "border-gray-200"}`}>
+            <div key={i} style={{ width:40, height:40, borderRadius:"50%", border: error ? "2px solid #f87171" : pin.length > i ? "2px solid #a855f7" : "2px solid #e5e7eb", display:"flex", alignItems:"center", justifyContent:"center", fontSize:18, fontWeight:"bold", background: error ? "#fef2f2" : pin.length > i ? "#faf5ff" : "white" }}>
               {pin.length > i ? "●" : ""}
             </div>
           ))}
         </div>
         {error && <div className="text-center text-xs text-red-500 mb-2">Code incorrect</div>}
-        <div className="grid grid-cols-3 gap-2 mb-3">
+        <div className="grid gap-2 mb-3" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
           {[1,2,3,4,5,6,7,8,9,"",0,"⌫"].map((d, i) => (
             <button key={i} onClick={() => { if (d === "⌫") setPin(p => p.slice(0,-1)); else if (d !== "") handleDigit(String(d)); }} disabled={d === ""}
-              className={`h-12 rounded-xl text-lg font-semibold transition-colors active:scale-95 ${d === "" ? "invisible" : "bg-gray-100 text-gray-800"}`}>
+              style={{ height:48, borderRadius:12, fontSize:18, fontWeight:"bold", background: d === "" ? "transparent" : "#f3f4f6", color:"#1f2937", border:"none", cursor: d === "" ? "default" : "pointer", visibility: d === "" ? "hidden" : "visible" }}>
               {d}
             </button>
           ))}
         </div>
-        <button onClick={onCancel} className="w-full py-2 text-sm text-gray-400">Annuler</button>
+        <button onClick={onCancel} style={{ width:"100%", padding:"8px", fontSize:14, color:"#9ca3af", background:"none", border:"none", cursor:"pointer" }}>Annuler</button>
       </div>
     </div>
   );
@@ -91,14 +81,13 @@ function PinModal({ onSuccess, onCancel }) {
 
 function Header() {
   return (
-    <div className="px-4 py-4 text-white flex items-center gap-3 shadow-lg"
-      style={{ background: "linear-gradient(135deg,#6b7280 0%,#9ca3af 50%,#ec4899 100%)" }}>
-      <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden flex-shrink-0">
-        <img src="/logo.png" alt="CEC" className="w-full h-full object-contain p-1" />
+    <div style={{ background: "linear-gradient(135deg,#6b7280 0%,#9ca3af 50%,#ec4899 100%)", padding:"16px", display:"flex", alignItems:"center", gap:12, boxShadow:"0 2px 8px rgba(0,0,0,0.15)" }}>
+      <div style={{ width:52, height:52, borderRadius:12, background:"white", display:"flex", alignItems:"center", justifyContent:"center", overflow:"hidden", flexShrink:0 }}>
+        <img src="/logo.png" alt="CEC" style={{ width:"100%", height:"100%", objectFit:"contain", padding:4 }} />
       </div>
       <div>
-        <div className="font-bold text-base leading-tight">CEC Sailly-sur-la-Lys</div>
-        <div className="text-white/70 text-xs">Club d'Éducation Canine</div>
+        <div style={{ fontWeight:"bold", fontSize:16, color:"white", lineHeight:1.2 }}>CEC Sailly-sur-la-Lys</div>
+        <div style={{ fontSize:12, color:"rgba(255,255,255,0.7)" }}>Club d'Education Canine</div>
       </div>
     </div>
   );
@@ -106,12 +95,12 @@ function Header() {
 
 function Home({ setTab }) {
   return (
-    <div className="p-4 space-y-4">
-      <div className="rounded-2xl p-4 border" style={{ background: "linear-gradient(135deg,#f9fafb,#fce7f3)", borderColor: "#f9a8d4" }}>
-        <p className="font-bold text-sm" style={{ color: "#be185d" }}>Bienvenue ! 👋</p>
-        <p className="text-xs text-gray-500 mt-1">CEC Sailly-sur-la-Lys — Club d'Éducation Canine</p>
+    <div style={{ padding:16, display:"flex", flexDirection:"column", gap:16 }}>
+      <div style={{ borderRadius:16, padding:16, background:"linear-gradient(135deg,#f9fafb,#fce7f3)", border:"1px solid #f9a8d4" }}>
+        <p style={{ fontWeight:"bold", fontSize:14, color:"#be185d" }}>Bienvenue ! 👋</p>
+        <p style={{ fontSize:12, color:"#6b7280", marginTop:4 }}>CEC Sailly-sur-la-Lys — Club d'Education Canine</p>
       </div>
-      <div className="grid grid-cols-2 gap-3">
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
         {[
           { icon: "🔔", label: "Actualités", sub: "Infos du club", tab: 1, grad: "linear-gradient(135deg,#6b7280,#9ca3af)" },
           { icon: "📅", label: "Agenda", sub: "Événements", tab: 2, grad: "linear-gradient(135deg,#ec4899,#f9a8d4)" },
@@ -119,25 +108,22 @@ function Home({ setTab }) {
           { icon: "💳", label: "Ma Carte", sub: "Photo de carte", tab: 4, grad: "linear-gradient(135deg,#be185d,#ec4899)" },
         ].map(item => (
           <button key={item.label} onClick={() => setTab(item.tab)}
-            className="rounded-2xl p-4 text-white text-left shadow-sm active:scale-95 transition-transform"
-            style={{ background: item.grad }}>
-            <div className="text-2xl mb-1">{item.icon}</div>
-            <div className="font-semibold text-sm">{item.label}</div>
-            <div className="text-xs text-white/75 mt-0.5">{item.sub}</div>
+            style={{ background:item.grad, borderRadius:16, padding:16, color:"white", textAlign:"left", border:"none", cursor:"pointer" }}>
+            <div style={{ fontSize:24, marginBottom:4 }}>{item.icon}</div>
+            <div style={{ fontWeight:600, fontSize:14 }}>{item.label}</div>
+            <div style={{ fontSize:12, opacity:0.75, marginTop:2 }}>{item.sub}</div>
           </button>
         ))}
       </div>
       <button onClick={() => setTab(6)}
-        className="w-full py-3 rounded-xl text-white text-sm font-medium shadow"
-        style={{ background: "linear-gradient(135deg,#6b7280,#ec4899)" }}>
+        style={{ width:"100%", padding:"12px", borderRadius:12, color:"white", fontSize:14, fontWeight:500, background:"linear-gradient(135deg,#6b7280,#ec4899)", border:"none", cursor:"pointer" }}>
         📞 Contacter le président
       </button>
     </div>
   );
 }
 
-function News() {
-  const [news, setNews] = useState(NEWS_INIT);
+function News({ news, setNews }) {
   const [expanded, setExpanded] = useState(null);
   const [showPin, setShowPin] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -152,51 +138,49 @@ function News() {
   };
 
   return (
-    <div className="p-4 space-y-3">
-      <div className="flex items-center justify-between">
-        <h2 className="text-base font-bold text-gray-800">🔔 Actualités</h2>
+    <div style={{ padding:16, display:"flex", flexDirection:"column", gap:12 }}>
+      <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+        <h2 style={{ fontSize:16, fontWeight:"bold", color:"#1f2937" }}>🔔 Actualités</h2>
         <button onClick={() => setShowPin(true)}
-          className="text-xs px-3 py-1.5 rounded-full text-white font-medium"
-          style={{ background: "linear-gradient(135deg,#ec4899,#be185d)" }}>+ Ajouter</button>
+          style={{ fontSize:12, padding:"6px 12px", borderRadius:999, color:"white", fontWeight:500, background:"linear-gradient(135deg,#ec4899,#be185d)", border:"none", cursor:"pointer" }}>+ Ajouter</button>
       </div>
+      {news.length === 0 && <div style={{ background:"white", borderRadius:16, padding:24, textAlign:"center", color:"#9ca3af", fontSize:14, border:"1px solid #f3f4f6" }}>Aucune actualité pour le moment</div>}
       {news.map(n => (
         <button key={n.id} onClick={() => setExpanded(expanded === n.id ? null : n.id)}
-          className="w-full text-left bg-white rounded-2xl p-4 border border-gray-100 shadow-sm space-y-1 active:scale-95 transition-transform">
-          <div className="flex items-center justify-between">
-            <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${TAG_COLORS[n.tag] || "bg-gray-100 text-gray-600"}`}>{n.tag}</span>
-            <span className="text-xs text-gray-400">{n.date}</span>
+          style={{ width:"100%", textAlign:"left", background:"white", borderRadius:16, padding:16, border:"1px solid #f3f4f6", cursor:"pointer", display:"flex", flexDirection:"column", gap:4 }}>
+          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+            <span style={{ fontSize:11, fontWeight:500, padding:"2px 8px", borderRadius:999, background: n.tag === "Événement" ? "#fae8ff" : n.tag === "Horaires" ? "#fce7f3" : "#f3f4f6", color: n.tag === "Événement" ? "#a21caf" : n.tag === "Horaires" ? "#be185d" : "#4b5563" }}>{n.tag}</span>
+            <span style={{ fontSize:11, color:"#9ca3af" }}>{n.date}</span>
           </div>
-          <div className="font-semibold text-sm text-gray-800">{n.title}</div>
+          <div style={{ fontWeight:600, fontSize:14, color:"#1f2937" }}>{n.title}</div>
           {expanded === n.id
-            ? <div className="text-xs text-gray-600 mt-1 leading-relaxed">{n.body}
-                <div className="mt-2"><button onClick={e => { e.stopPropagation(); setNews(news.filter(x => x.id !== n.id)); setExpanded(null); }} className="text-xs text-red-400 underline">🗑 Supprimer</button></div>
+            ? <div style={{ fontSize:12, color:"#4b5563", lineHeight:1.6 }}>{n.body}
+                <div style={{ marginTop:8 }}><button onClick={e => { e.stopPropagation(); setNews(news.filter(x => x.id !== n.id)); setExpanded(null); }} style={{ fontSize:12, color:"#f87171", background:"none", border:"none", cursor:"pointer", textDecoration:"underline" }}>🗑 Supprimer</button></div>
               </div>
-            : <div className="text-xs text-gray-400">Appuyer pour lire…</div>}
+            : <div style={{ fontSize:12, color:"#9ca3af" }}>Appuyer pour lire…</div>}
         </button>
       ))}
       {showPin && <PinModal onSuccess={() => { setShowPin(false); setShowForm(true); }} onCancel={() => setShowPin(false)} />}
       {showForm && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-3xl p-6 w-full max-w-xs shadow-xl space-y-3">
-            <div className="font-bold text-gray-800 text-center">📢 Nouvelle actualité</div>
-            <div><div className="text-xs text-gray-500 mb-1">Titre *</div>
+        <div className="fixed inset-0 flex items-center justify-center z-50 p-4" style={{ background:"rgba(0,0,0,0.5)", position:"fixed", top:0, left:0, right:0, bottom:0, display:"flex", alignItems:"center", justifyContent:"center", zIndex:50, padding:16 }}>
+          <div style={{ background:"white", borderRadius:24, padding:24, width:"100%", maxWidth:320, display:"flex", flexDirection:"column", gap:12 }}>
+            <div style={{ fontWeight:"bold", textAlign:"center", color:"#1f2937" }}>📢 Nouvelle actualité</div>
+            <div><div style={{ fontSize:12, color:"#6b7280", marginBottom:4 }}>Titre *</div>
               <input value={form.title} onChange={e => setForm({...form, title: e.target.value})} placeholder="Ex: Entraînement annulé"
-                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-fuchsia-400" /></div>
-            <div><div className="text-xs text-gray-500 mb-1">Message *</div>
+                style={{ width:"100%", border:"1px solid #e5e7eb", borderRadius:12, padding:"8px 12px", fontSize:14, outline:"none" }} /></div>
+            <div><div style={{ fontSize:12, color:"#6b7280", marginBottom:4 }}>Message *</div>
               <textarea value={form.body} onChange={e => setForm({...form, body: e.target.value})} placeholder="Détails…" rows={3}
-                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-fuchsia-400 resize-none" /></div>
-            <div><div className="text-xs text-gray-500 mb-1">Catégorie</div>
-              <div className="flex gap-2">
+                style={{ width:"100%", border:"1px solid #e5e7eb", borderRadius:12, padding:"8px 12px", fontSize:14, outline:"none", resize:"none" }} /></div>
+            <div><div style={{ fontSize:12, color:"#6b7280", marginBottom:4 }}>Catégorie</div>
+              <div style={{ display:"flex", gap:8 }}>
                 {["Info","Événement","Horaires"].map(t => (
                   <button key={t} onClick={() => setForm({...form, tag: t})}
-                    className={`flex-1 py-1.5 rounded-xl text-xs font-medium border transition-colors ${form.tag === t ? "text-white border-transparent" : "bg-white border-gray-200 text-gray-500"}`}
-                    style={form.tag === t ? { background: "linear-gradient(135deg,#ec4899,#be185d)" } : {}}>{t}</button>
+                    style={{ flex:1, padding:"6px", borderRadius:12, fontSize:12, fontWeight:500, border: form.tag === t ? "none" : "1px solid #e5e7eb", background: form.tag === t ? "linear-gradient(135deg,#ec4899,#be185d)" : "white", color: form.tag === t ? "white" : "#6b7280", cursor:"pointer" }}>{t}</button>
                 ))}
               </div></div>
-            <div className="flex gap-2 pt-1">
-              <button onClick={() => setShowForm(false)} className="flex-1 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-500">Annuler</button>
-              <button onClick={handleAdd} className="flex-1 py-2.5 rounded-xl text-white text-sm font-medium"
-                style={{ background: "linear-gradient(135deg,#ec4899,#be185d)" }}>Publier</button>
+            <div style={{ display:"flex", gap:8 }}>
+              <button onClick={() => setShowForm(false)} style={{ flex:1, padding:"10px", borderRadius:12, border:"1px solid #e5e7eb", fontSize:14, color:"#6b7280", background:"white", cursor:"pointer" }}>Annuler</button>
+              <button onClick={handleAdd} style={{ flex:1, padding:"10px", borderRadius:12, fontSize:14, color:"white", fontWeight:500, background:"linear-gradient(135deg,#ec4899,#be185d)", border:"none", cursor:"pointer" }}>Publier</button>
             </div>
           </div>
         </div>
@@ -205,8 +189,7 @@ function News() {
   );
 }
 
-function Agenda() {
-  const [events, setEvents] = useState(INIT_EVENTS);
+function Agenda({ events, setEvents }) {
   const [selected, setSelected] = useState(null);
   const [showPin, setShowPin] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -220,51 +203,49 @@ function Agenda() {
   };
 
   return (
-    <div className="p-4 space-y-3">
-      <div className="flex items-center justify-between">
-        <h2 className="text-base font-bold text-gray-800">📅 Agenda du club</h2>
+    <div style={{ padding:16, display:"flex", flexDirection:"column", gap:12 }}>
+      <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+        <h2 style={{ fontSize:16, fontWeight:"bold", color:"#1f2937" }}>📅 Agenda du club</h2>
         <button onClick={() => setShowPin(true)}
-          className="text-xs px-3 py-1.5 rounded-full text-white font-medium"
-          style={{ background: "linear-gradient(135deg,#ec4899,#be185d)" }}>+ Ajouter</button>
+          style={{ fontSize:12, padding:"6px 12px", borderRadius:999, color:"white", fontWeight:500, background:"linear-gradient(135deg,#ec4899,#be185d)", border:"none", cursor:"pointer" }}>+ Ajouter</button>
       </div>
+      {events.length === 0 && <div style={{ background:"white", borderRadius:16, padding:24, textAlign:"center", color:"#9ca3af", fontSize:14, border:"1px solid #f3f4f6" }}>Aucun événement pour le moment</div>}
       {events.map(e => (
         <button key={e.id} onClick={() => setSelected(selected === e.id ? null : e.id)}
-          className="w-full text-left bg-white rounded-2xl p-4 border border-gray-100 shadow-sm active:scale-95 transition-transform">
-          <div className="flex items-center gap-3">
-            <div className="rounded-xl text-center px-2.5 py-1.5 text-white text-xs font-bold flex-shrink-0 w-14"
-              style={{ background: "linear-gradient(135deg,#ec4899,#be185d)" }}>
-              {e.day && <div className="text-white/80 text-xs">{e.day}</div>}
-              <div className="text-sm font-bold leading-tight">{e.date}</div>
+          style={{ width:"100%", textAlign:"left", background:"white", borderRadius:16, padding:16, border:"1px solid #f3f4f6", cursor:"pointer" }}>
+          <div style={{ display:"flex", alignItems:"center", gap:12 }}>
+            <div style={{ borderRadius:12, textAlign:"center", padding:"6px 10px", color:"white", fontSize:12, fontWeight:"bold", flexShrink:0, width:56, background:"linear-gradient(135deg,#ec4899,#be185d)" }}>
+              {e.day && <div style={{ fontSize:11, opacity:0.8 }}>{e.day}</div>}
+              <div style={{ fontSize:14, fontWeight:"bold" }}>{e.date}</div>
             </div>
-            <div className="flex-1 min-w-0">
-              <div className="font-semibold text-sm text-gray-800 truncate">{e.title}</div>
-              {e.time && <div className="text-xs text-gray-400">{e.time}</div>}
+            <div style={{ flex:1, minWidth:0 }}>
+              <div style={{ fontWeight:600, fontSize:14, color:"#1f2937" }}>{e.title}</div>
+              {e.time && <div style={{ fontSize:12, color:"#9ca3af" }}>{e.time}</div>}
               {selected === e.id && (
-                <div className="mt-2 space-y-1">
-                  {e.place && <div className="text-xs text-gray-600">📍 {e.place}</div>}
+                <div style={{ marginTop:8, display:"flex", flexDirection:"column", gap:4 }}>
+                  {e.place && <div style={{ fontSize:12, color:"#4b5563" }}>📍 {e.place}</div>}
                   <button onClick={ev => { ev.stopPropagation(); setEvents(events.filter(x => x.id !== e.id)); setSelected(null); }}
-                    className="text-xs text-red-400 underline">🗑 Supprimer</button>
+                    style={{ fontSize:12, color:"#f87171", background:"none", border:"none", cursor:"pointer", textDecoration:"underline", textAlign:"left" }}>🗑 Supprimer</button>
                 </div>
               )}
             </div>
-            <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: "#ec4899" }} />
+            <div style={{ width:10, height:10, borderRadius:"50%", background:"#ec4899", flexShrink:0 }} />
           </div>
         </button>
       ))}
       {showPin && <PinModal onSuccess={() => { setShowPin(false); setShowForm(true); }} onCancel={() => setShowPin(false)} />}
       {showForm && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-3xl p-6 w-full max-w-xs shadow-xl space-y-3">
-            <div className="font-bold text-gray-800 text-center">➕ Nouvel événement</div>
-            {[{label:"Titre *",key:"title",ph:"Ex: Entraînement"},{label:"Date *",key:"date",ph:"Ex: 5 avr."},{label:"Jour",key:"day",ph:"Ex: Sam"},{label:"Horaire",key:"time",ph:"Ex: 09h00 – 12h00"},{label:"Lieu",key:"place",ph:"Ex: Rue de la Gare"}].map(f => (
-              <div key={f.key}><div className="text-xs text-gray-500 mb-1">{f.label}</div>
+        <div style={{ position:"fixed", top:0, left:0, right:0, bottom:0, background:"rgba(0,0,0,0.5)", display:"flex", alignItems:"center", justifyContent:"center", zIndex:50, padding:16 }}>
+          <div style={{ background:"white", borderRadius:24, padding:24, width:"100%", maxWidth:320, display:"flex", flexDirection:"column", gap:12 }}>
+            <div style={{ fontWeight:"bold", textAlign:"center", color:"#1f2937" }}>Nouvel événement</div>
+            {[{label:"Titre *",key:"title",ph:"Ex: Entraînement"},{label:"Date *",key:"date",ph:"Ex: 5 avr."},{label:"Jour",key:"day",ph:"Ex: Sam"},{label:"Horaire",key:"time",ph:"Ex: 09h00 - 12h00"},{label:"Lieu",key:"place",ph:"Ex: Rue de la Gare"}].map(f => (
+              <div key={f.key}><div style={{ fontSize:12, color:"#6b7280", marginBottom:4 }}>{f.label}</div>
                 <input value={form[f.key]} onChange={e => setForm({...form,[f.key]:e.target.value})} placeholder={f.ph}
-                  className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm outline-none focus:border-fuchsia-400" /></div>
+                  style={{ width:"100%", border:"1px solid #e5e7eb", borderRadius:12, padding:"8px 12px", fontSize:14, outline:"none" }} /></div>
             ))}
-            <div className="flex gap-2 pt-1">
-              <button onClick={() => setShowForm(false)} className="flex-1 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-500">Annuler</button>
-              <button onClick={handleAdd} className="flex-1 py-2.5 rounded-xl text-white text-sm font-medium"
-                style={{ background: "linear-gradient(135deg,#ec4899,#be185d)" }}>Ajouter</button>
+            <div style={{ display:"flex", gap:8 }}>
+              <button onClick={() => setShowForm(false)} style={{ flex:1, padding:"10px", borderRadius:12, border:"1px solid #e5e7eb", fontSize:14, color:"#6b7280", background:"white", cursor:"pointer" }}>Annuler</button>
+              <button onClick={handleAdd} style={{ flex:1, padding:"10px", borderRadius:12, fontSize:14, color:"white", fontWeight:500, background:"linear-gradient(135deg,#ec4899,#be185d)", border:"none", cursor:"pointer" }}>Ajouter</button>
             </div>
           </div>
         </div>
@@ -275,35 +256,34 @@ function Agenda() {
 
 function Facebook() {
   return (
-    <div className="p-4 space-y-3">
-      <div className="flex items-center gap-2">
-        <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-bold">f</div>
-        <h2 className="text-base font-bold text-gray-800">Page Facebook</h2>
-        <span className="ml-auto text-xs font-medium px-2 py-0.5 rounded-full" style={{ color: "#be185d", background: "#fce7f3" }}>● En direct</span>
+    <div style={{ padding:16, display:"flex", flexDirection:"column", gap:12 }}>
+      <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+        <div style={{ width:28, height:28, borderRadius:"50%", background:"#1877f2", display:"flex", alignItems:"center", justifyContent:"center", color:"white", fontSize:14, fontWeight:"bold" }}>f</div>
+        <h2 style={{ fontSize:16, fontWeight:"bold", color:"#1f2937" }}>Page Facebook</h2>
+        <span style={{ marginLeft:"auto", fontSize:11, fontWeight:500, padding:"2px 8px", borderRadius:999, color:"#be185d", background:"#fce7f3" }}>En direct</span>
       </div>
-      <div className="rounded-xl px-3 py-2 text-xs border" style={{ background: "#fce7f3", borderColor: "#f9a8d4", color: "#be185d" }}>
+      <div style={{ borderRadius:12, padding:"8px 12px", fontSize:12, border:"1px solid #f9a8d4", background:"#fce7f3", color:"#be185d" }}>
         Connecté à : <strong>CEC Sailly-sur-la-Lys</strong>
       </div>
       {FB_POSTS.map(p => (
-        <div key={p.id} className="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm space-y-2">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full text-white text-xs font-bold flex items-center justify-center"
-              style={{ background: "linear-gradient(135deg,#6b7280,#ec4899)" }}>CEC</div>
+        <div key={p.id} style={{ background:"white", borderRadius:16, padding:16, border:"1px solid #f3f4f6", display:"flex", flexDirection:"column", gap:8 }}>
+          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+            <div style={{ width:32, height:32, borderRadius:"50%", background:"linear-gradient(135deg,#6b7280,#ec4899)", display:"flex", alignItems:"center", justifyContent:"center", color:"white", fontSize:11, fontWeight:"bold" }}>CEC</div>
             <div>
-              <div className="text-xs font-semibold text-gray-800">CEC Sailly-sur-la-Lys</div>
-              <div className="text-xs text-gray-400">{p.time}</div>
+              <div style={{ fontSize:12, fontWeight:600, color:"#1f2937" }}>CEC Sailly-sur-la-Lys</div>
+              <div style={{ fontSize:11, color:"#9ca3af" }}>{p.time}</div>
             </div>
           </div>
-          <p className="text-sm text-gray-700 leading-relaxed">{p.text}</p>
-          <div className="flex gap-4 pt-1 border-t border-gray-50">
-            <span className="text-xs text-gray-400">👍 {p.likes}</span>
-            <span className="text-xs text-gray-400">💬 {p.comments}</span>
+          <p style={{ fontSize:14, color:"#374151", lineHeight:1.5 }}>{p.text}</p>
+          <div style={{ display:"flex", gap:16, paddingTop:8, borderTop:"1px solid #f9fafb" }}>
+            <span style={{ fontSize:12, color:"#9ca3af" }}>👍 {p.likes}</span>
+            <span style={{ fontSize:12, color:"#9ca3af" }}>💬 {p.comments}</span>
           </div>
         </div>
       ))}
       <a href="https://www.facebook.com/cecsaillysurlalys" target="_blank" rel="noreferrer"
-        className="block w-full py-2.5 rounded-xl text-white text-sm font-medium text-center" style={{ background: "#1877f2" }}>
-        Voir la page complète →
+        style={{ display:"block", width:"100%", padding:"10px", borderRadius:12, color:"white", fontSize:14, fontWeight:500, textAlign:"center", background:"#1877f2", textDecoration:"none" }}>
+        Voir la page complète
       </a>
     </div>
   );
@@ -321,36 +301,35 @@ function MemberCard() {
     reader.readAsDataURL(file);
   };
   return (
-    <div className="p-4 space-y-4">
-      <h2 className="text-base font-bold text-gray-800">💳 Ma Carte de Membre</h2>
-      <p className="text-xs text-gray-500">Prenez en photo votre carte de membre pour la retrouver rapidement.</p>
-      <input ref={fileRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={handleFile} />
+    <div style={{ padding:16, display:"flex", flexDirection:"column", gap:16 }}>
+      <h2 style={{ fontSize:16, fontWeight:"bold", color:"#1f2937" }}>Ma Carte de Membre</h2>
+      <p style={{ fontSize:12, color:"#6b7280" }}>Prenez en photo votre carte de membre pour la retrouver rapidement.</p>
+      <input ref={fileRef} type="file" accept="image/*" capture="environment" style={{ display:"none" }} onChange={handleFile} />
       {photo ? (
-        <div className="space-y-3">
-          <div className="rounded-2xl overflow-hidden shadow-md border border-gray-100">
-            <img src={photo} alt="carte membre" className="w-full object-cover" style={{ maxHeight: "220px" }} />
+        <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
+          <div style={{ borderRadius:16, overflow:"hidden", boxShadow:"0 2px 8px rgba(0,0,0,0.1)", border:"1px solid #f3f4f6" }}>
+            <img src={photo} alt="carte membre" style={{ width:"100%", objectFit:"cover", maxHeight:220 }} />
           </div>
           <button onClick={() => { setPhoto(null); setCaptured(false); }}
-            className="w-full py-2.5 rounded-xl border border-gray-200 text-sm text-gray-500">🔄 Reprendre la photo</button>
+            style={{ width:"100%", padding:"10px", borderRadius:12, border:"1px solid #e5e7eb", fontSize:14, color:"#6b7280", background:"white", cursor:"pointer" }}>Reprendre la photo</button>
         </div>
       ) : (
-        <div className="rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 flex flex-col items-center justify-center py-12 gap-3 cursor-pointer"
-          onClick={() => fileRef.current.click()}>
-          <div className="text-5xl">📷</div>
-          <div className="text-sm text-gray-500 font-medium">Photographier ma carte</div>
-          <div className="text-xs text-gray-400">Appuyez pour ouvrir l'appareil photo</div>
+        <div onClick={() => fileRef.current.click()}
+          style={{ borderRadius:16, border:"2px dashed #e5e7eb", background:"#f9fafb", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"48px 0", gap:12, cursor:"pointer" }}>
+          <div style={{ fontSize:48 }}>📷</div>
+          <div style={{ fontSize:14, color:"#6b7280", fontWeight:500 }}>Photographier ma carte</div>
+          <div style={{ fontSize:12, color:"#9ca3af" }}>Appuyez pour ouvrir l'appareil photo</div>
         </div>
       )}
-      <div className="grid grid-cols-2 gap-3">
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
         <button onClick={() => fileRef.current.click()}
-          className="text-white rounded-xl py-3 text-sm font-medium flex items-center justify-center gap-2"
-          style={{ background: "#ec4899" }}>📸 Appareil photo</button>
+          style={{ padding:"12px", borderRadius:12, color:"white", fontSize:14, fontWeight:500, background:"#ec4899", border:"none", cursor:"pointer" }}>📸 Appareil photo</button>
         <button onClick={() => fileRef.current.click()}
-          className="bg-white border border-gray-200 text-gray-700 rounded-xl py-3 text-sm font-medium flex items-center justify-center gap-2">🖼️ Galerie</button>
+          style={{ padding:"12px", borderRadius:12, color:"#374151", fontSize:14, fontWeight:500, background:"white", border:"1px solid #e5e7eb", cursor:"pointer" }}>🖼️ Galerie</button>
       </div>
       {captured && (
-        <div className="rounded-xl px-4 py-3 text-sm font-medium text-center border" style={{ background: "#fce7f3", borderColor: "#f9a8d4", color: "#be185d" }}>
-          ✅ Carte enregistrée !
+        <div style={{ borderRadius:12, padding:"12px 16px", fontSize:14, fontWeight:500, textAlign:"center", border:"1px solid #f9a8d4", background:"#fce7f3", color:"#be185d" }}>
+          Carte enregistrée !
         </div>
       )}
     </div>
@@ -362,32 +341,30 @@ function Astuces() {
   const categories = ["Tous", "Premier secours", "Les bons gestes"];
   const filtered = filtre === "Tous" ? ASTUCES : ASTUCES.filter(a => a.tag === filtre);
   return (
-    <div className="p-4 space-y-3">
-      <div className="flex items-center justify-between">
-        <h2 className="text-base font-bold text-gray-800">💡 Trucs & Astuces</h2>
+    <div style={{ padding:16, display:"flex", flexDirection:"column", gap:12 }}>
+      <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+        <h2 style={{ fontSize:16, fontWeight:"bold", color:"#1f2937" }}>Trucs et Astuces</h2>
         <a href="https://www.cec-saillysurlalys.com/blog" target="_blank" rel="noreferrer"
-          className="text-xs px-3 py-1.5 rounded-full text-white font-medium"
-          style={{ background: "linear-gradient(135deg,#ec4899,#be185d)" }}>Voir le blog ↗</a>
+          style={{ fontSize:12, padding:"6px 12px", borderRadius:999, color:"white", fontWeight:500, background:"linear-gradient(135deg,#ec4899,#be185d)", textDecoration:"none" }}>Voir le blog</a>
       </div>
-      <div className="flex gap-2 overflow-x-auto pb-1">
+      <div style={{ display:"flex", gap:8, overflowX:"auto", paddingBottom:4 }}>
         {categories.map(c => (
           <button key={c} onClick={() => setFiltre(c)}
-            className="flex-shrink-0 text-xs px-3 py-1.5 rounded-full font-medium border transition-colors"
-            style={filtre === c ? { background: "linear-gradient(135deg,#ec4899,#be185d)", color: "white", borderColor: "transparent" } : { background: "white", color: "#6b7280", borderColor: "#e5e7eb" }}>
+            style={{ flexShrink:0, fontSize:12, padding:"6px 12px", borderRadius:999, fontWeight:500, border: filtre === c ? "none" : "1px solid #e5e7eb", background: filtre === c ? "linear-gradient(135deg,#ec4899,#be185d)" : "white", color: filtre === c ? "white" : "#6b7280", cursor:"pointer" }}>
             {c}
           </button>
         ))}
       </div>
       {filtered.map(a => (
         <a key={a.id} href={a.url} target="_blank" rel="noreferrer"
-          className="block bg-white rounded-2xl p-4 border border-gray-100 shadow-sm active:scale-95 transition-transform">
-          <div className="flex items-start gap-3">
-            <div className="text-3xl flex-shrink-0 mt-0.5">{a.emoji}</div>
-            <div className="flex-1 min-w-0">
-              <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${TAG_ASTUCES[a.tag]}`}>{a.tag}</span>
-              <div className="font-semibold text-sm text-gray-800 mt-1">{a.titre}</div>
-              <div className="text-xs text-gray-500 mt-0.5 leading-relaxed">{a.résumé}</div>
-              <div className="text-xs mt-2 font-medium" style={{ color: "#ec4899" }}>Lire l'article →</div>
+          style={{ display:"block", background:"white", borderRadius:16, padding:16, border:"1px solid #f3f4f6", textDecoration:"none" }}>
+          <div style={{ display:"flex", alignItems:"flex-start", gap:12 }}>
+            <div style={{ fontSize:28, flexShrink:0 }}>{a.emoji}</div>
+            <div style={{ flex:1, minWidth:0 }}>
+              <span style={{ fontSize:11, fontWeight:500, padding:"2px 8px", borderRadius:999, background: a.tag === "Les bons gestes" ? "#fae8ff" : "#fee2e2", color: a.tag === "Les bons gestes" ? "#a21caf" : "#dc2626" }}>{a.tag}</span>
+              <div style={{ fontWeight:600, fontSize:14, color:"#1f2937", marginTop:4 }}>{a.titre}</div>
+              <div style={{ fontSize:12, color:"#6b7280", marginTop:2, lineHeight:1.5 }}>{a.resume}</div>
+              <div style={{ fontSize:12, marginTop:8, fontWeight:500, color:"#ec4899" }}>Lire l'article →</div>
             </div>
           </div>
         </a>
@@ -398,30 +375,31 @@ function Astuces() {
 
 function Contact() {
   return (
-    <div className="p-4 space-y-4">
-      <h2 className="text-base font-bold text-gray-800">📞 Contact</h2>
-      <div className="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm flex items-center gap-4">
-        <div className="w-12 h-12 rounded-full text-2xl flex items-center justify-center flex-shrink-0" style={{ background: "#fce7f3" }}>👨‍💼</div>
-        <div className="flex-1">
-          <div className="text-xs text-gray-400">Président</div>
-          <div className="font-bold text-sm text-gray-800">M. Yannick Le Berre</div>
-          <div className="text-xs mt-0.5 font-medium" style={{ color: "#ec4899" }}>06 22 85 96 46</div>
+    <div style={{ padding:16, display:"flex", flexDirection:"column", gap:16 }}>
+      <h2 style={{ fontSize:16, fontWeight:"bold", color:"#1f2937" }}>Contact</h2>
+      <div style={{ background:"white", borderRadius:16, padding:16, border:"1px solid #f3f4f6", display:"flex", alignItems:"center", gap:16 }}>
+        <div style={{ width:48, height:48, borderRadius:"50%", fontSize:24, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, background:"#fce7f3" }}>👨‍💼</div>
+        <div style={{ flex:1 }}>
+          <div style={{ fontSize:12, color:"#9ca3af" }}>Président</div>
+          <div style={{ fontWeight:"bold", fontSize:14, color:"#1f2937" }}>M. Yannick Le Berre</div>
+          <div style={{ fontSize:12, marginTop:2, fontWeight:500, color:"#ec4899" }}>06 22 85 96 46</div>
         </div>
-        <a href="tel:0622859646" className="w-11 h-11 rounded-full text-white flex items-center justify-center text-lg shadow flex-shrink-0"
-          style={{ background: "linear-gradient(135deg,#ec4899,#be185d)" }}>📞</a>
+        <a href="tel:0622859646"
+          style={{ width:44, height:44, borderRadius:"50%", background:"linear-gradient(135deg,#ec4899,#be185d)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:18, flexShrink:0, textDecoration:"none" }}>📞</a>
       </div>
-      <div className="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm space-y-3">
-        <div className="text-sm font-semibold text-gray-700">📍 Adresse</div>
-        <div className="text-sm text-gray-600">Rue de la Gare<br />62840 Sailly-sur-la-Lys</div>
+      <div style={{ background:"white", borderRadius:16, padding:16, border:"1px solid #f3f4f6", display:"flex", flexDirection:"column", gap:12 }}>
+        <div style={{ fontSize:14, fontWeight:600, color:"#374151" }}>Adresse</div>
+        <div style={{ fontSize:14, color:"#4b5563" }}>Rue de la Gare<br />62840 Sailly-sur-la-Lys</div>
         <a href="https://maps.google.com/?q=Rue+de+la+Gare+62840+Sailly-sur-la-Lys" target="_blank" rel="noreferrer"
-          className="block w-full py-2.5 rounded-xl text-white text-sm font-medium text-center"
-          style={{ background: "linear-gradient(135deg,#6b7280,#9ca3af)" }}>🗺️ Ouvrir dans Google Maps</a>
+          style={{ display:"block", width:"100%", padding:"10px", borderRadius:12, color:"white", fontSize:14, fontWeight:500, textAlign:"center", background:"linear-gradient(135deg,#6b7280,#9ca3af)", textDecoration:"none" }}>
+          Ouvrir dans Google Maps
+        </a>
       </div>
-      <div className="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm space-y-2">
-        <div className="text-sm font-semibold text-gray-700">📧 Email</div>
-        <a href="mailto:saillysurlalys.cec@gmail.com" className="text-sm break-all" style={{ color: "#ec4899" }}>saillysurlalys.cec@gmail.com</a>
-        <div className="text-sm font-semibold text-gray-700 pt-2">🕐 Horaires d'entraînement</div>
-        <div className="text-sm text-gray-600">Samedi : 09h00 – 12h00<br />Mercredi : 19h00 – 21h00</div>
+      <div style={{ background:"white", borderRadius:16, padding:16, border:"1px solid #f3f4f6", display:"flex", flexDirection:"column", gap:8 }}>
+        <div style={{ fontSize:14, fontWeight:600, color:"#374151" }}>Email</div>
+        <a href="mailto:saillysurlalys.cec@gmail.com" style={{ fontSize:14, color:"#ec4899", wordBreak:"break-all", textDecoration:"none" }}>saillysurlalys.cec@gmail.com</a>
+        <div style={{ fontSize:14, fontWeight:600, color:"#374151", marginTop:8 }}>Horaires d'entraînement</div>
+        <div style={{ fontSize:14, color:"#4b5563" }}>Samedi : 09h00 – 12h00<br />Mercredi : 19h00 – 21h00</div>
       </div>
     </div>
   );
@@ -429,28 +407,31 @@ function Contact() {
 
 export default function App() {
   const [tab, setTab] = useState(0);
+  const [news, setNews] = useState([]);
+  const [events, setEvents] = useState([]);
+
   const screens = [
     <Home setTab={setTab} />,
-    <News />,
-    <Agenda />,
+    <News news={news} setNews={setNews} />,
+    <Agenda events={events} setEvents={setEvents} />,
     <Facebook />,
     <MemberCard />,
     <Astuces />,
     <Contact />,
   ];
+
   return (
-    <div className="max-w-sm mx-auto bg-gray-50 min-h-screen flex flex-col" style={{ fontFamily: "system-ui, sans-serif" }}>
+    <div style={{ maxWidth:430, margin:"0 auto", background:"#f9fafb", minHeight:"100vh", display:"flex", flexDirection:"column", fontFamily:"system-ui, -apple-system, sans-serif" }}>
       <Header />
-      <div className="flex-1 overflow-y-auto pb-24">{screens[tab]}</div>
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-sm bg-white border-t border-gray-100 shadow-lg">
-        <div className="flex">
+      <div style={{ flex:1, overflowY:"auto", paddingBottom:80 }}>{screens[tab]}</div>
+      <div style={{ position:"fixed", bottom:0, left:"50%", transform:"translateX(-50%)", width:"100%", maxWidth:430, background:"white", borderTop:"1px solid #f3f4f6", boxShadow:"0 -2px 8px rgba(0,0,0,0.05)" }}>
+        <div style={{ display:"flex" }}>
           {TABS.map((label, i) => (
             <button key={label} onClick={() => setTab(i)}
-              className="flex-shrink-0 flex-1 py-2.5 flex flex-col items-center gap-0.5 transition-colors min-w-0"
-              style={{ color: tab === i ? "#ec4899" : "#9ca3af" }}>
-              <span className="text-lg">{ICONS[i]}</span>
-              <span style={{ fontSize: "9px" }} className="font-medium">{label}</span>
-              {tab === i && <span className="w-1 h-1 rounded-full" style={{ background: "#ec4899" }} />}
+              style={{ flex:1, padding:"10px 0", display:"flex", flexDirection:"column", alignItems:"center", gap:2, border:"none", background:"none", cursor:"pointer", color: tab === i ? "#ec4899" : "#9ca3af" }}>
+              <span style={{ fontSize:18 }}>{ICONS[i]}</span>
+              <span style={{ fontSize:9, fontWeight:500 }}>{label}</span>
+              {tab === i && <span style={{ width:4, height:4, borderRadius:"50%", background:"#ec4899" }} />}
             </button>
           ))}
         </div>
