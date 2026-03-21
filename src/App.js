@@ -1,29 +1,24 @@
-import { useState, useRef } from "react";
-import { requestNotificationPermission, onMessageListener } from "./firebase";
+import { useState, useRef, useEffect } from "react";
+
 const TABS = ["Accueil", "Actus", "Agenda", "Facebook", "Carte", "Astuces", "Contact"];
 const ICONS = ["🏠", "🔔", "📅", "📘", "💳", "💡", "📞"];
 const ADMIN_PIN = "1411";
 
-const FB_POSTS = [
-  { id: 1, time: "Il y a 2h", text: "Super séance d'agilité ce matin avec nos jeunes chiens ! Bravo à tous les maîtres. A samedi !", likes: 24, comments: 5 },
-  { id: 2, time: "Il y a 1 jour", text: "Rappel : réunion de bureau mardi 24 mars à 20h à la salle des fêtes. Tous les membres sont les bienvenus.", likes: 12, comments: 2 },
-];
-
 const ASTUCES = [
-  { id: 1, emoji: "🐕", titre: "Gérer l'agressivité du chien en laisse", resume: "Stratégies et Fleurs de Bach pour garder son sang-froid en balade face à la réactivité en laisse.", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/agressivite-chien-laisse-fleurs-de-bach" },
-  { id: 2, emoji: "🧦", titre: "Mon chien a mangé une chaussette", resume: "Chiot ou adulte, votre chien peut avaler un vêtement. Que faire si vous le prenez sur le fait ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-mang%C3%A9-une-chaussette" },
-  { id: 3, emoji: "🧴", titre: "Mon chien a bu du détergent", resume: "La maison peut être dangereuse pour votre chien. Que faire en cas d'ingestion de produit ménager ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-bu-du-d%C3%A9tergent" },
-  { id: 4, emoji: "🕷️", titre: "Les tiques", resume: "La tique est un acarien parasite qui guette le passage d'un hôte. Comment la reconnaître et la retirer ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/les-tiques" },
-  { id: 5, emoji: "🐸", titre: "Mon chien a mangé un crapaud", resume: "Nos compagnons sont très curieux et peuvent tomber nez à nez avec un crapaud. Les bons réflexes.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-mang%C3%A9-un-crapaud" },
-  { id: 6, emoji: "🩹", titre: "Mon chien s'est fait une plaie", resume: "Comme nous, les chiens peuvent se blesser. En fonction de la gravité, voici comment réagir.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-s-est-fait-une-plaie" },
-  { id: 7, emoji: "🪼", titre: "Piqure de méduse", resume: "Vous emmenez votre chien à la mer ? Voici quoi faire en cas de contact avec une méduse.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/piq%C3%BBre-de-m%C3%A9duse" },
-  { id: 8, emoji: "🐾", titre: "Coupure du coussinet", resume: "En promenade ou à la maison, votre chien peut s'ouvrir les coussinets. Les gestes à adopter.", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/coupure-du-coussinet" },
-  { id: 9, emoji: "🐝", titre: "Piqure de guêpe ou abeille", resume: "La curiosité de nos compagnons peut leur coûter cher face à une guêpe ou une abeille.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/piq%C3%BBre-de-gu%C3%AApe-ou-abeille" },
-  { id: 10, emoji: "🐶", titre: "Morsures entre congénères", resume: "Les chiens ne peuvent pas toujours s'entendre. Comment réagir en cas de morsure par un autre chien ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/morsures-cong%C3%A9n%C3%A8res" },
-  { id: 11, emoji: "🔥", titre: "Brulures", resume: "Barbecue, huile de friture ou sol trop chaud : comment soigner une brûlure chez le chien.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/brulures" },
-  { id: 12, emoji: "🐍", titre: "Morsure de serpent", resume: "En France, les vipères sont dangereuses pour nos chiens. Les bons réflexes si cela arrive.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-s-est-fait-mordre-par-un-serpent" },
-  { id: 13, emoji: "🚗", titre: "Mon chien a été percuté par une voiture", resume: "Si votre chien se fait renverser, voici la marche à suivre pour ne pas aggraver la situation.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-%C3%A9t%C3%A9-percut%C3%A9-par-une-voiture" },
-  { id: 14, emoji: "🤕", titre: "Mon chien boite : entorse", resume: "Comme pour l'humain, une entorse peut être plus ou moins grave. Comment la reconnaître ?", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/mon-chien-bo%C3%AEte-entorse" },
+  { id: 1, emoji: "🐕", titre: "Gerer l'agressivite du chien en laisse", resume: "Strategies et Fleurs de Bach pour garder son sang-froid en balade face a la reactivite en laisse.", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/agressivite-chien-laisse-fleurs-de-bach" },
+  { id: 2, emoji: "🧦", titre: "Mon chien a mange une chaussette", resume: "Chiot ou adulte, votre chien peut avaler un vetement. Que faire si vous le prenez sur le fait ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-mang%C3%A9-une-chaussette" },
+  { id: 3, emoji: "🧴", titre: "Mon chien a bu du detergent", resume: "La maison peut etre dangereuse pour votre chien. Que faire en cas d'ingestion de produit menager ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-bu-du-d%C3%A9tergent" },
+  { id: 4, emoji: "🕷️", titre: "Les tiques", resume: "La tique est un acarien parasite qui guette le passage d'un hote. Comment la reconnaitre et la retirer ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/les-tiques" },
+  { id: 5, emoji: "🐸", titre: "Mon chien a mange un crapaud", resume: "Nos compagnons sont tres curieux et peuvent tomber nez a nez avec un crapaud. Les bons reflexes.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-mang%C3%A9-un-crapaud" },
+  { id: 6, emoji: "🩹", titre: "Mon chien s'est fait une plaie", resume: "Comme nous, les chiens peuvent se blesser. En fonction de la gravite, voici comment reagir.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-s-est-fait-une-plaie" },
+  { id: 7, emoji: "🪼", titre: "Piqure de meduse", resume: "Vous emmenez votre chien a la mer ? Voici quoi faire en cas de contact avec une meduse.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/piq%C3%BBre-de-m%C3%A9duse" },
+  { id: 8, emoji: "🐾", titre: "Coupure du coussinet", resume: "En promenade ou a la maison, votre chien peut s'ouvrir les coussinets. Les gestes a adopter.", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/coupure-du-coussinet" },
+  { id: 9, emoji: "🐝", titre: "Piqure de guepe ou abeille", resume: "La curiosite de nos compagnons peut leur couter cher face a une guepe ou une abeille.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/piq%C3%BBre-de-gu%C3%AApe-ou-abeille" },
+  { id: 10, emoji: "🐶", titre: "Morsures entre congeneres", resume: "Les chiens ne peuvent pas toujours s'entendre. Comment reagir en cas de morsure par un autre chien ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/morsures-cong%C3%A9n%C3%A8res" },
+  { id: 11, emoji: "🔥", titre: "Brulures", resume: "Barbecue, huile de friture ou sol trop chaud : comment soigner une brulure chez le chien.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/brulures" },
+  { id: 12, emoji: "🐍", titre: "Morsure de serpent", resume: "En France, les viperes sont dangereuses pour nos chiens. Les bons reflexes si cela arrive.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-s-est-fait-mordre-par-un-serpent" },
+  { id: 13, emoji: "🚗", titre: "Mon chien a ete percute par une voiture", resume: "Si votre chien se fait renverser, voici la marche a suivre pour ne pas aggraver la situation.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-%C3%A9t%C3%A9-percut%C3%A9-par-une-voiture" },
+  { id: 14, emoji: "🤕", titre: "Mon chien boite : entorse", resume: "Comme pour l'humain, une entorse peut etre plus ou moins grave. Comment la reconnaitre ?", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/mon-chien-bo%C3%AEte-entorse" },
   { id: 15, emoji: "🚙", titre: "Mon chien est malade en voiture", resume: "Vomissements, salivation, prostration : les solutions pour que les trajets se passent mieux.", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/mon-chien-est-malade-en-voiture" },
 ];
 
@@ -37,6 +32,14 @@ const S = {
   overlay: { position: "fixed", top: 0, left: 0, right: 0, bottom: 0, background: "rgba(0,0,0,0.5)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 50, padding: 16 },
   modal: { background: "white", borderRadius: 24, padding: 24, width: "100%", maxWidth: 320, display: "flex", flexDirection: "column", gap: 12 },
 };
+
+function save(key, data) {
+  try { window.localStorage.setItem(key, JSON.stringify(data)); } catch(e) {}
+}
+
+function load(key) {
+  try { const v = window.localStorage.getItem(key); return v ? JSON.parse(v) : null; } catch(e) { return null; }
+}
 
 function PinModal({ onSuccess, onCancel }) {
   const [pin, setPin] = useState("");
@@ -55,7 +58,7 @@ function PinModal({ onSuccess, onCancel }) {
         <div style={{ textAlign: "center" }}>
           <div style={{ fontSize: 28 }}>🔐</div>
           <div style={{ fontWeight: "bold", color: "#1f2937", marginTop: 4 }}>Code administrateur</div>
-          <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 4 }}>Entrez votre code PIN à 4 chiffres</div>
+          <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 4 }}>Entrez votre code PIN a 4 chiffres</div>
         </div>
         <div style={{ display: "flex", justifyContent: "center", gap: 12 }}>
           {[0,1,2,3].map(i => (
@@ -102,9 +105,9 @@ function Home({ setTab }) {
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
         {[
-          { icon: "🔔", label: "Actualités", sub: "Infos du club", tab: 1, grad: "linear-gradient(135deg,#6b7280,#9ca3af)" },
-          { icon: "📅", label: "Agenda", sub: "Événements", tab: 2, grad: "linear-gradient(135deg,#ec4899,#f9a8d4)" },
-          { icon: "📘", label: "Facebook", sub: "Posts récents", tab: 3, grad: "linear-gradient(135deg,#3b82f6,#6366f1)" },
+          { icon: "🔔", label: "Actualites", sub: "Infos du club", tab: 1, grad: "linear-gradient(135deg,#6b7280,#9ca3af)" },
+          { icon: "📅", label: "Agenda", sub: "Evenements", tab: 2, grad: "linear-gradient(135deg,#ec4899,#f9a8d4)" },
+          { icon: "📘", label: "Facebook", sub: "Posts recents", tab: 3, grad: "linear-gradient(135deg,#3b82f6,#6366f1)" },
           { icon: "💳", label: "Ma Carte", sub: "Photo de carte", tab: 4, grad: "linear-gradient(135deg,#be185d,#ec4899)" },
         ].map(item => (
           <button key={item.label} onClick={() => setTab(item.tab)}
@@ -116,7 +119,7 @@ function Home({ setTab }) {
         ))}
       </div>
       <button onClick={() => setTab(6)} style={{ width: "100%", padding: 12, borderRadius: 12, color: "white", fontSize: 14, fontWeight: 500, background: "linear-gradient(135deg,#6b7280,#ec4899)", border: "none", cursor: "pointer" }}>
-        📞 Contacter le président
+        📞 Contacter le president
       </button>
     </div>
   );
@@ -134,48 +137,57 @@ function News({ news, setNews }) {
   const handleAdd = () => {
     if (!form.title || !form.body) return;
     const today = new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
-    setNews([{ id: Date.now(), date: today, ...form }, ...news]);
+    const updated = [{ id: Date.now(), date: today, ...form }, ...news];
+    setNews(updated);
+    save("cec_news", updated);
     setForm({ title: "", body: "", tag: "Info" });
     setShowForm(false);
+  };
+
+  const handleDelete = (id) => {
+    const updated = news.filter(x => x.id !== id);
+    setNews(updated);
+    save("cec_news", updated);
+    setExpanded(null);
   };
 
   return (
     <div style={S.page}>
       <div style={S.row}>
-        <h2 style={S.title}>🔔 Actualités</h2>
+        <h2 style={S.title}>🔔 Actualites</h2>
         <button style={S.btnPink} onClick={() => askPin(() => setShowForm(true))}>+ Ajouter</button>
       </div>
-      {news.length === 0 && <div style={{ ...S.card, textAlign: "center", color: "#9ca3af", fontSize: 14 }}>Aucune actualité pour le moment</div>}
+      {news.length === 0 && <div style={{ ...S.card, textAlign: "center", color: "#9ca3af", fontSize: 14, padding: 32 }}>Aucune actualite pour le moment</div>}
       {news.map(n => (
         <button key={n.id} onClick={() => setExpanded(expanded === n.id ? null : n.id)}
           style={{ ...S.card, width: "100%", textAlign: "left", cursor: "pointer", display: "flex", flexDirection: "column", gap: 4 }}>
           <div style={S.row}>
-            <span style={{ fontSize: 11, fontWeight: 500, padding: "2px 8px", borderRadius: 999, background: n.tag === "Événement" ? "#fae8ff" : n.tag === "Horaires" ? "#fce7f3" : "#f3f4f6", color: n.tag === "Événement" ? "#a21caf" : n.tag === "Horaires" ? "#be185d" : "#4b5563" }}>{n.tag}</span>
+            <span style={{ fontSize: 11, fontWeight: 500, padding: "2px 8px", borderRadius: 999, background: n.tag === "Evenement" ? "#fae8ff" : n.tag === "Horaires" ? "#fce7f3" : "#f3f4f6", color: n.tag === "Evenement" ? "#a21caf" : n.tag === "Horaires" ? "#be185d" : "#4b5563" }}>{n.tag}</span>
             <span style={{ fontSize: 11, color: "#9ca3af" }}>{n.date}</span>
           </div>
           <div style={{ fontWeight: 600, fontSize: 14, color: "#1f2937" }}>{n.title}</div>
           {expanded === n.id
             ? <div style={{ fontSize: 12, color: "#4b5563", lineHeight: 1.6 }}>{n.body}
                 <div style={{ marginTop: 8 }}>
-                  <button onClick={e => { e.stopPropagation(); askPin(() => { setNews(news.filter(x => x.id !== n.id)); setExpanded(null); }); }}
-                    style={{ fontSize: 12, color: "#f87171", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}>🗑 Supprimer</button>
+                  <button onClick={e => { e.stopPropagation(); askPin(() => handleDelete(n.id)); }}
+                    style={{ fontSize: 12, color: "#f87171", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}>Supprimer</button>
                 </div>
               </div>
-            : <div style={{ fontSize: 12, color: "#9ca3af" }}>Appuyer pour lire…</div>}
+            : <div style={{ fontSize: 12, color: "#9ca3af" }}>Appuyer pour lire...</div>}
         </button>
       ))}
       {showPin && <PinModal onSuccess={() => { setShowPin(false); if (pinAction) { pinAction(); setPinAction(null); } }} onCancel={() => { setShowPin(false); setPinAction(null); }} />}
       {showForm && (
         <div style={S.overlay}>
           <div style={S.modal}>
-            <div style={{ fontWeight: "bold", textAlign: "center", color: "#1f2937" }}>📢 Nouvelle actualité</div>
-            <div><div style={{ fontSize: 12, color: "#6b7280", marginBottom: 4 }}>Titre *</div>
-              <input value={form.title} onChange={e => setForm({...form, title: e.target.value})} placeholder="Ex: Entrainement annulé" style={S.input} /></div>
-            <div><div style={{ fontSize: 12, color: "#6b7280", marginBottom: 4 }}>Message *</div>
-              <textarea value={form.body} onChange={e => setForm({...form, body: e.target.value})} placeholder="Détails…" rows={3} style={{ ...S.input, resize: "none" }} /></div>
-            <div><div style={{ fontSize: 12, color: "#6b7280", marginBottom: 4 }}>Catégorie</div>
+            <div style={{ fontWeight: "bold", textAlign: "center", color: "#1f2937" }}>Nouvelle actualite</div>
+            <div><div style={{ fontSize: 12, color: "#6b7280", marginBottom: 4 }}>Titre</div>
+              <input value={form.title} onChange={e => setForm({...form, title: e.target.value})} placeholder="Ex: Entrainement annule" style={S.input} /></div>
+            <div><div style={{ fontSize: 12, color: "#6b7280", marginBottom: 4 }}>Message</div>
+              <textarea value={form.body} onChange={e => setForm({...form, body: e.target.value})} placeholder="Details..." rows={3} style={{ ...S.input, resize: "none" }} /></div>
+            <div><div style={{ fontSize: 12, color: "#6b7280", marginBottom: 4 }}>Categorie</div>
               <div style={{ display: "flex", gap: 8 }}>
-                {["Info","Événement","Horaires"].map(t => (
+                {["Info","Evenement","Horaires"].map(t => (
                   <button key={t} onClick={() => setForm({...form, tag: t})}
                     style={{ flex: 1, padding: 6, borderRadius: 12, fontSize: 12, fontWeight: 500, border: form.tag === t ? "none" : "1px solid #e5e7eb", background: form.tag === t ? "linear-gradient(135deg,#ec4899,#be185d)" : "white", color: form.tag === t ? "white" : "#6b7280", cursor: "pointer" }}>{t}</button>
                 ))}
@@ -202,9 +214,18 @@ function Agenda({ events, setEvents }) {
 
   const handleAdd = () => {
     if (!form.title || !form.date) return;
-    setEvents([...events, { ...form, id: Date.now() }]);
+    const updated = [...events, { ...form, id: Date.now() }];
+    setEvents(updated);
+    save("cec_events", updated);
     setForm({ date: "", day: "", title: "", time: "", place: "" });
     setShowForm(false);
+  };
+
+  const handleDelete = (id) => {
+    const updated = events.filter(x => x.id !== id);
+    setEvents(updated);
+    save("cec_events", updated);
+    setSelected(null);
   };
 
   return (
@@ -213,7 +234,7 @@ function Agenda({ events, setEvents }) {
         <h2 style={S.title}>📅 Agenda du club</h2>
         <button style={S.btnPink} onClick={() => askPin(() => setShowForm(true))}>+ Ajouter</button>
       </div>
-      {events.length === 0 && <div style={{ ...S.card, textAlign: "center", color: "#9ca3af", fontSize: 14 }}>Aucun événement pour le moment</div>}
+      {events.length === 0 && <div style={{ ...S.card, textAlign: "center", color: "#9ca3af", fontSize: 14, padding: 32 }}>Aucun evenement pour le moment</div>}
       {events.map(e => (
         <button key={e.id} onClick={() => setSelected(selected === e.id ? null : e.id)}
           style={{ ...S.card, width: "100%", textAlign: "left", cursor: "pointer" }}>
@@ -228,8 +249,8 @@ function Agenda({ events, setEvents }) {
               {selected === e.id && (
                 <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 4 }}>
                   {e.place && <div style={{ fontSize: 12, color: "#4b5563" }}>📍 {e.place}</div>}
-                  <button onClick={ev => { ev.stopPropagation(); askPin(() => { setEvents(events.filter(x => x.id !== e.id)); setSelected(null); }); }}
-                    style={{ fontSize: 12, color: "#f87171", background: "none", border: "none", cursor: "pointer", textDecoration: "underline", textAlign: "left" }}>🗑 Supprimer</button>
+                  <button onClick={ev => { ev.stopPropagation(); askPin(() => handleDelete(e.id)); }}
+                    style={{ fontSize: 12, color: "#f87171", background: "none", border: "none", cursor: "pointer", textDecoration: "underline", textAlign: "left" }}>Supprimer</button>
                 </div>
               )}
             </div>
@@ -241,8 +262,8 @@ function Agenda({ events, setEvents }) {
       {showForm && (
         <div style={S.overlay}>
           <div style={S.modal}>
-            <div style={{ fontWeight: "bold", textAlign: "center", color: "#1f2937" }}>Nouvel événement</div>
-            {[{label:"Titre *",key:"title",ph:"Ex: Entrainement"},{label:"Date *",key:"date",ph:"Ex: 5 avr."},{label:"Jour",key:"day",ph:"Ex: Sam"},{label:"Horaire",key:"time",ph:"Ex: 09h00 - 12h00"},{label:"Lieu",key:"place",ph:"Ex: Rue de la Gare"}].map(f => (
+            <div style={{ fontWeight: "bold", textAlign: "center", color: "#1f2937" }}>Nouvel evenement</div>
+            {[{label:"Titre",key:"title",ph:"Ex: Entrainement"},{label:"Date",key:"date",ph:"Ex: 5 avr."},{label:"Jour",key:"day",ph:"Ex: Sam"},{label:"Horaire",key:"time",ph:"Ex: 09h00 - 12h00"},{label:"Lieu",key:"place",ph:"Ex: Rue de la Gare"}].map(f => (
               <div key={f.key}><div style={{ fontSize: 12, color: "#6b7280", marginBottom: 4 }}>{f.label}</div>
                 <input value={form[f.key]} onChange={e => setForm({...form,[f.key]:e.target.value})} placeholder={f.ph} style={S.input} /></div>
             ))}
@@ -266,13 +287,13 @@ function Facebook() {
       </div>
       <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid #e5e7eb", background: "white" }}>
         <iframe
-          src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fcecsaillysurlalys&tabs=timeline&width=380&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false&appId"
+          src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fcecsaillysurlalys&tabs=timeline&width=380&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false"
           width="100%"
           height="500"
           style={{ border: "none", overflow: "hidden", display: "block" }}
           scrolling="no"
           frameBorder="0"
-          allowFullScreen
+          allowFullScreen={true}
           allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
           title="Page Facebook CEC"
         />
@@ -305,7 +326,7 @@ function MemberCard() {
           <div style={{ borderRadius: 16, overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
             <img src={photo} alt="carte" style={{ width: "100%", objectFit: "cover", maxHeight: 220 }} />
           </div>
-          <button onClick={() => setPhoto(null)} style={{ width: "100%", padding: 10, borderRadius: 12, border: "1px solid #e5e7eb", fontSize: 14, color: "#6b7280", background: "white", cursor: "pointer" }}>🔄 Reprendre la photo</button>
+          <button onClick={() => setPhoto(null)} style={{ width: "100%", padding: 10, borderRadius: 12, border: "1px solid #e5e7eb", fontSize: 14, color: "#6b7280", background: "white", cursor: "pointer" }}>Reprendre la photo</button>
         </div>
       ) : (
         <div onClick={() => fileRef.current.click()}
@@ -316,8 +337,8 @@ function MemberCard() {
         </div>
       )}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-        <button onClick={() => fileRef.current.click()} style={{ padding: 12, borderRadius: 12, color: "white", fontSize: 14, fontWeight: 500, background: "#ec4899", border: "none", cursor: "pointer" }}>📸 Appareil photo</button>
-        <button onClick={() => fileRef.current.click()} style={{ padding: 12, borderRadius: 12, color: "#374151", fontSize: 14, background: "white", border: "1px solid #e5e7eb", cursor: "pointer" }}>🖼️ Galerie</button>
+        <button onClick={() => fileRef.current.click()} style={{ padding: 12, borderRadius: 12, color: "white", fontSize: 14, fontWeight: 500, background: "#ec4899", border: "none", cursor: "pointer" }}>Appareil photo</button>
+        <button onClick={() => fileRef.current.click()} style={{ padding: 12, borderRadius: 12, color: "#374151", fontSize: 14, background: "white", border: "1px solid #e5e7eb", cursor: "pointer" }}>Galerie</button>
       </div>
     </div>
   );
@@ -351,7 +372,7 @@ function Astuces() {
               <span style={{ fontSize: 11, fontWeight: 500, padding: "2px 8px", borderRadius: 999, background: a.tag === "Les bons gestes" ? "#fae8ff" : "#fee2e2", color: a.tag === "Les bons gestes" ? "#a21caf" : "#dc2626" }}>{a.tag}</span>
               <div style={{ fontWeight: 600, fontSize: 14, color: "#1f2937", marginTop: 4 }}>{a.titre}</div>
               <div style={{ fontSize: 12, color: "#6b7280", marginTop: 2, lineHeight: 1.5 }}>{a.resume}</div>
-              <div style={{ fontSize: 12, marginTop: 8, fontWeight: 500, color: "#ec4899" }}>Lire l'article →</div>
+              <div style={{ fontSize: 12, marginTop: 8, fontWeight: 500, color: "#ec4899" }}>Lire l'article</div>
             </div>
           </div>
         </a>
@@ -367,7 +388,7 @@ function Contact() {
       <div style={{ ...S.card, display: "flex", alignItems: "center", gap: 16 }}>
         <div style={{ width: 48, height: 48, borderRadius: "50%", fontSize: 24, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: "#fce7f3" }}>👨‍💼</div>
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 12, color: "#9ca3af" }}>Président</div>
+          <div style={{ fontSize: 12, color: "#9ca3af" }}>President</div>
           <div style={{ fontWeight: "bold", fontSize: 14, color: "#1f2937" }}>M. Yannick Le Berre</div>
           <div style={{ fontSize: 12, marginTop: 2, fontWeight: 500, color: "#ec4899" }}>06 22 85 96 46</div>
         </div>
@@ -378,13 +399,13 @@ function Contact() {
         <div style={{ fontSize: 14, color: "#4b5563" }}>Rue de la Gare<br />62840 Sailly-sur-la-Lys</div>
         <a href="https://share.google/FciL3IbUO1iIXCVdV" target="_blank" rel="noreferrer"
           style={{ display: "block", width: "100%", padding: 10, borderRadius: 12, color: "white", fontSize: 14, fontWeight: 500, textAlign: "center", background: "linear-gradient(135deg,#6b7280,#9ca3af)", textDecoration: "none" }}>
-          🗺️ Ouvrir dans Google Maps
+          Ouvrir dans Google Maps
         </a>
       </div>
       <div style={{ ...S.card, display: "flex", flexDirection: "column", gap: 8 }}>
         <div style={{ fontSize: 14, fontWeight: 600, color: "#374151" }}>📧 Email</div>
         <a href="mailto:saillysurlalys.cec@gmail.com" style={{ fontSize: 14, color: "#ec4899", wordBreak: "break-all", textDecoration: "none" }}>saillysurlalys.cec@gmail.com</a>
-        <div style={{ fontSize: 14, fontWeight: 600, color: "#374151", marginTop: 8 }}>🕐 Horaires d'entraînement</div>
+        <div style={{ fontSize: 14, fontWeight: 600, color: "#374151", marginTop: 8 }}>🕐 Horaires d'entrainement</div>
         <div style={{ fontSize: 14, color: "#4b5563", lineHeight: 1.8 }}>
           <strong>Dimanche matin</strong><br />
           09h30 - 10h30 : chiens de plus de 9 mois<br />
@@ -401,6 +422,13 @@ export default function App() {
   const [tab, setTab] = useState(0);
   const [news, setNews] = useState([]);
   const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    const savedNews = load("cec_news");
+    const savedEvents = load("cec_events");
+    if (savedNews) setNews(savedNews);
+    if (savedEvents) setEvents(savedEvents);
+  }, []);
 
   const screens = [
     <Home setTab={setTab} />,
