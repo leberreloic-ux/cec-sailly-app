@@ -6,21 +6,21 @@ const ICONS = ["🏠", "🔔", "📅", "📘", "💳", "💡", "📞"];
 const ADMIN_PIN = "1411";
 
 const ASTUCES = [
-  { id: 1, emoji: "🐕", titre: "Gerer l'agressivite du chien en laisse", resume: "Strategies et Fleurs de Bach pour garder son sang-froid en balade face a la reactivite en laisse.", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/agressivite-chien-laisse-fleurs-de-bach" },
-  { id: 2, emoji: "🧦", titre: "Mon chien a mange une chaussette", resume: "Chiot ou adulte, votre chien peut avaler un vetement. Que faire si vous le prenez sur le fait ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-mang%C3%A9-une-chaussette" },
-  { id: 3, emoji: "🧴", titre: "Mon chien a bu du detergent", resume: "La maison peut etre dangereuse pour votre chien. Que faire en cas d'ingestion de produit menager ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-bu-du-d%C3%A9tergent" },
-  { id: 4, emoji: "🕷️", titre: "Les tiques", resume: "La tique est un acarien parasite qui guette le passage d'un hote. Comment la reconnaitre et la retirer ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/les-tiques" },
-  { id: 5, emoji: "🐸", titre: "Mon chien a mange un crapaud", resume: "Nos compagnons sont tres curieux et peuvent tomber nez a nez avec un crapaud. Les bons reflexes.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-mang%C3%A9-un-crapaud" },
-  { id: 6, emoji: "🩹", titre: "Mon chien s'est fait une plaie", resume: "Comme nous, les chiens peuvent se blesser. En fonction de la gravite, voici comment reagir.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-s-est-fait-une-plaie" },
-  { id: 7, emoji: "🪼", titre: "Piqure de meduse", resume: "Vous emmenez votre chien a la mer ? Voici quoi faire en cas de contact avec une meduse.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/piq%C3%BBre-de-m%C3%A9duse" },
-  { id: 8, emoji: "🐾", titre: "Coupure du coussinet", resume: "En promenade ou a la maison, votre chien peut s'ouvrir les coussinets. Les gestes a adopter.", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/coupure-du-coussinet" },
-  { id: 9, emoji: "🐝", titre: "Piqure de guepe ou abeille", resume: "La curiosite de nos compagnons peut leur couter cher face a une guepe ou une abeille.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/piq%C3%BBre-de-gu%C3%AApe-ou-abeille" },
-  { id: 10, emoji: "🐶", titre: "Morsures entre congeneres", resume: "Les chiens ne peuvent pas toujours s'entendre. Comment reagir en cas de morsure par un autre chien ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/morsures-cong%C3%A9n%C3%A8res" },
-  { id: 11, emoji: "🔥", titre: "Brulures", resume: "Barbecue, huile de friture ou sol trop chaud : comment soigner une brulure chez le chien.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/brulures" },
-  { id: 12, emoji: "🐍", titre: "Morsure de serpent", resume: "En France, les viperes sont dangereuses pour nos chiens. Les bons reflexes si cela arrive.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-s-est-fait-mordre-par-un-serpent" },
-  { id: 13, emoji: "🚗", titre: "Mon chien a ete percute par une voiture", resume: "Si votre chien se fait renverser, voici la marche a suivre pour ne pas aggraver la situation.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-%C3%A9t%C3%A9-percut%C3%A9-par-une-voiture" },
-  { id: 14, emoji: "🤕", titre: "Mon chien boite : entorse", resume: "Comme pour l'humain, une entorse peut etre plus ou moins grave. Comment la reconnaitre ?", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/mon-chien-bo%C3%AEte-entorse" },
-  { id: 15, emoji: "🚙", titre: "Mon chien est malade en voiture", resume: "Vomissements, salivation, prostration : les solutions pour que les trajets se passent mieux.", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/mon-chien-est-malade-en-voiture" },
+  { id: 1, emoji: "chien", titre: "Gerer l'agressivite du chien en laisse", resume: "Strategies et Fleurs de Bach pour garder son sang-froid en balade face a la reactivite en laisse.", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/agressivite-chien-laisse-fleurs-de-bach" },
+  { id: 2, emoji: "chaussette", titre: "Mon chien a mange une chaussette", resume: "Chiot ou adulte, votre chien peut avaler un vetement. Que faire si vous le prenez sur le fait ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-mang%C3%A9-une-chaussette" },
+  { id: 3, emoji: "produit", titre: "Mon chien a bu du detergent", resume: "La maison peut etre dangereuse pour votre chien. Que faire en cas d'ingestion de produit menager ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-bu-du-d%C3%A9tergent" },
+  { id: 4, emoji: "tique", titre: "Les tiques", resume: "La tique est un acarien parasite qui guette le passage d'un hote. Comment la reconnaitre et la retirer ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/les-tiques" },
+  { id: 5, emoji: "crapaud", titre: "Mon chien a mange un crapaud", resume: "Nos compagnons sont tres curieux et peuvent tomber nez a nez avec un crapaud. Les bons reflexes.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-mang%C3%A9-un-crapaud" },
+  { id: 6, emoji: "plaie", titre: "Mon chien s'est fait une plaie", resume: "Comme nous, les chiens peuvent se blesser. En fonction de la gravite, voici comment reagir.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-s-est-fait-une-plaie" },
+  { id: 7, emoji: "meduse", titre: "Piqure de meduse", resume: "Vous emmenez votre chien a la mer ? Voici quoi faire en cas de contact avec une meduse.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/piq%C3%BBre-de-m%C3%A9duse" },
+  { id: 8, emoji: "patte", titre: "Coupure du coussinet", resume: "En promenade ou a la maison, votre chien peut s'ouvrir les coussinets. Les gestes a adopter.", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/coupure-du-coussinet" },
+  { id: 9, emoji: "guepe", titre: "Piqure de guepe ou abeille", resume: "La curiosite de nos compagnons peut leur couter cher face a une guepe ou une abeille.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/piq%C3%BBre-de-gu%C3%AApe-ou-abeille" },
+  { id: 10, emoji: "morsure", titre: "Morsures entre congeneres", resume: "Les chiens ne peuvent pas toujours s'entendre. Comment reagir en cas de morsure par un autre chien ?", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/morsures-cong%C3%A9n%C3%A8res" },
+  { id: 11, emoji: "feu", titre: "Brulures", resume: "Barbecue, huile de friture ou sol trop chaud : comment soigner une brulure chez le chien.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/brulures" },
+  { id: 12, emoji: "serpent", titre: "Morsure de serpent", resume: "En France, les viperes sont dangereuses pour nos chiens. Les bons reflexes si cela arrive.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-s-est-fait-mordre-par-un-serpent" },
+  { id: 13, emoji: "voiture", titre: "Mon chien a ete percute par une voiture", resume: "Si votre chien se fait renverser, voici la marche a suivre pour ne pas aggraver la situation.", tag: "Premier secours", url: "https://www.cec-saillysurlalys.com/post/mon-chien-a-%C3%A9t%C3%A9-percut%C3%A9-par-une-voiture" },
+  { id: 14, emoji: "entorse", titre: "Mon chien boite : entorse", resume: "Comme pour l'humain, une entorse peut etre plus ou moins grave. Comment la reconnaitre ?", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/mon-chien-bo%C3%AEte-entorse" },
+  { id: 15, emoji: "voiture2", titre: "Mon chien est malade en voiture", resume: "Vomissements, salivation, prostration : les solutions pour que les trajets se passent mieux.", tag: "Les bons gestes", url: "https://www.cec-saillysurlalys.com/post/mon-chien-est-malade-en-voiture" },
 ];
 
 const S = {
@@ -49,21 +49,21 @@ function PinModal({ onSuccess, onCancel }) {
     <div style={S.overlay}>
       <div style={S.modal}>
         <div style={{ textAlign: "center" }}>
-          <div style={{ fontSize: 28 }}>🔐</div>
+          <div style={{ fontSize: 28 }}>X</div>
           <div style={{ fontWeight: "bold", color: "#1f2937", marginTop: 4 }}>Code administrateur</div>
           <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 4 }}>Entrez votre code PIN a 4 chiffres</div>
         </div>
         <div style={{ display: "flex", justifyContent: "center", gap: 12 }}>
           {[0,1,2,3].map(i => (
             <div key={i} style={{ width: 40, height: 40, borderRadius: "50%", border: error ? "2px solid #f87171" : pin.length > i ? "2px solid #a855f7" : "2px solid #e5e7eb", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, fontWeight: "bold", background: error ? "#fef2f2" : pin.length > i ? "#faf5ff" : "white" }}>
-              {pin.length > i ? "●" : ""}
+              {pin.length > i ? "o" : ""}
             </div>
           ))}
         </div>
         {error && <div style={{ textAlign: "center", fontSize: 12, color: "#ef4444" }}>Code incorrect</div>}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8 }}>
-          {[1,2,3,4,5,6,7,8,9,"",0,"⌫"].map((d, i) => (
-            <button key={i} onClick={() => { if (d === "⌫") setPin(p => p.slice(0,-1)); else if (d !== "") handleDigit(String(d)); }} disabled={d === ""}
+          {[1,2,3,4,5,6,7,8,9,"",0,"<"].map((d, i) => (
+            <button key={i} onClick={() => { if (d === "<") setPin(p => p.slice(0,-1)); else if (d !== "") handleDigit(String(d)); }} disabled={d === ""}
               style={{ height: 48, borderRadius: 12, fontSize: 18, fontWeight: "bold", background: d === "" ? "transparent" : "#f3f4f6", color: "#1f2937", border: "none", cursor: d === "" ? "default" : "pointer", visibility: d === "" ? "hidden" : "visible" }}>
               {d}
             </button>
@@ -98,10 +98,10 @@ function Home({ setTab }) {
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
         {[
-          { icon: "🔔", label: "Actualites", sub: "Infos du club", tab: 1, grad: "linear-gradient(135deg,#6b7280,#9ca3af)" },
-          { icon: "📅", label: "Agenda", sub: "Evenements", tab: 2, grad: "linear-gradient(135deg,#ec4899,#f9a8d4)" },
-          { icon: "📘", label: "Facebook", sub: "Posts recents", tab: 3, grad: "linear-gradient(135deg,#3b82f6,#6366f1)" },
-          { icon: "💳", label: "Ma Carte", sub: "Photo de carte", tab: 4, grad: "linear-gradient(135deg,#be185d,#ec4899)" },
+          { icon: "N", label: "Actualites", sub: "Infos du club", tab: 1, grad: "linear-gradient(135deg,#6b7280,#9ca3af)" },
+          { icon: "A", label: "Agenda", sub: "Evenements", tab: 2, grad: "linear-gradient(135deg,#ec4899,#f9a8d4)" },
+          { icon: "F", label: "Facebook", sub: "Posts recents", tab: 3, grad: "linear-gradient(135deg,#3b82f6,#6366f1)" },
+          { icon: "C", label: "Ma Carte", sub: "Photo de carte", tab: 4, grad: "linear-gradient(135deg,#be185d,#ec4899)" },
         ].map(item => (
           <button key={item.label} onClick={() => setTab(item.tab)}
             style={{ background: item.grad, borderRadius: 16, padding: 16, color: "white", textAlign: "left", border: "none", cursor: "pointer" }}>
@@ -247,7 +247,7 @@ function Agenda() {
               {e.time && <div style={{ fontSize: 12, color: "#9ca3af" }}>{e.time}</div>}
               {selected === e.id && (
                 <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 4 }}>
-                  {e.place && <div style={{ fontSize: 12, color: "#4b5563" }}>📍 {e.place}</div>}
+                  {e.place && <div style={{ fontSize: 12, color: "#4b5563" }}>Lieu: {e.place}</div>}
                   <button onClick={ev => { ev.stopPropagation(); askPin(() => deleteEvent(e.id)); }}
                     style={{ fontSize: 12, color: "#f87171", background: "none", border: "none", cursor: "pointer", textDecoration: "underline", textAlign: "left" }}>Supprimer</button>
                 </div>
@@ -330,7 +330,7 @@ function MemberCard() {
       ) : (
         <div onClick={() => fileRef.current.click()}
           style={{ borderRadius: 16, border: "2px dashed #e5e7eb", background: "#f9fafb", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "48px 0", gap: 12, cursor: "pointer" }}>
-          <div style={{ fontSize: 48 }}>📷</div>
+          <div style={{ fontSize: 48 }}>photo</div>
           <div style={{ fontSize: 14, color: "#6b7280", fontWeight: 500 }}>Photographier ma carte</div>
           <div style={{ fontSize: 12, color: "#9ca3af" }}>Appuyez pour ouvrir l'appareil photo</div>
         </div>
@@ -366,7 +366,7 @@ function Astuces() {
         <a key={a.id} href={a.url} target="_blank" rel="noreferrer"
           style={{ display: "block", ...S.card, textDecoration: "none" }}>
           <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
-            <div style={{ fontSize: 28, flexShrink: 0 }}>{a.emoji}</div>
+            <div style={{ fontSize: 14, flexShrink: 0, background: "#fce7f3", borderRadius: 8, padding: "4px 8px", color: "#be185d", fontWeight: "bold" }}>{a.id}</div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <span style={{ fontSize: 11, fontWeight: 500, padding: "2px 8px", borderRadius: 999, background: a.tag === "Les bons gestes" ? "#fae8ff" : "#fee2e2", color: a.tag === "Les bons gestes" ? "#a21caf" : "#dc2626" }}>{a.tag}</span>
               <div style={{ fontWeight: 600, fontSize: 14, color: "#1f2937", marginTop: 4 }}>{a.titre}</div>
@@ -385,17 +385,17 @@ function Contact() {
     <div style={S.page}>
       <h2 style={S.title}>Contact</h2>
       <div style={{ ...S.card, display: "flex", alignItems: "center", gap: 16 }}>
-        <div style={{ width: 48, height: 48, borderRadius: "50%", fontSize: 24, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: "#fce7f3" }}>👨‍💼</div>
+        <div style={{ width: 48, height: 48, borderRadius: "50%", fontSize: 24, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: "#fce7f3" }}>P</div>
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: 12, color: "#9ca3af" }}>President</div>
           <div style={{ fontWeight: "bold", fontSize: 14, color: "#1f2937" }}>M. Yannick Le Berre</div>
           <div style={{ fontSize: 12, marginTop: 2, fontWeight: 500, color: "#ec4899" }}>06 22 85 96 46</div>
         </div>
-        <a href="tel:0622859646" style={{ width: 44, height: 44, borderRadius: "50%", background: "linear-gradient(135deg,#ec4899,#be185d)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, flexShrink: 0, textDecoration: "none" }}>📞</a>
+        <a href="tel:0622859646" style={{ width: 44, height: 44, borderRadius: "50%", background: "linear-gradient(135deg,#ec4899,#be185d)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, color: "white", flexShrink: 0, textDecoration: "none" }}>Tel</a>
       </div>
       <div style={{ ...S.card, display: "flex", flexDirection: "column", gap: 12 }}>
         <div style={{ fontSize: 14, fontWeight: 600, color: "#374151" }}>Adresse</div>
-        <div style={{ fontSize: 14, color: "#4b5563" }}>Rue de la Gare<br />62840 Sailly-sur-la-Lys</div>
+        <div style={{ fontSize: 14, color: "#4b5563" }}>Rue de la Gare - 62840 Sailly-sur-la-Lys</div>
         <a href="https://share.google/FciL3IbUO1iIXCVdV" target="_blank" rel="noreferrer"
           style={{ display: "block", width: "100%", padding: 10, borderRadius: 12, color: "white", fontSize: 14, fontWeight: 500, textAlign: "center", background: "linear-gradient(135deg,#6b7280,#9ca3af)", textDecoration: "none" }}>
           Ouvrir dans Google Maps
@@ -404,13 +404,12 @@ function Contact() {
       <div style={{ ...S.card, display: "flex", flexDirection: "column", gap: 8 }}>
         <div style={{ fontSize: 14, fontWeight: 600, color: "#374151" }}>Email</div>
         <a href="mailto:saillysurlalys.cec@gmail.com" style={{ fontSize: 14, color: "#ec4899", wordBreak: "break-all", textDecoration: "none" }}>saillysurlalys.cec@gmail.com</a>
-        <div style={{ fontSize: 14, fontWeight: 600, color: "#374151", marginTop: 8 }}>Horaires d'entrainement</div>
+        <div style={{ fontSize: 14, fontWeight: 600, color: "#374151", marginTop: 8 }}>Horaires</div>
         <div style={{ fontSize: 14, color: "#4b5563", lineHeight: 1.8 }}>
-          <strong>Dimanche matin</strong><br />
+          Dimanche matin :<br />
           09h30 - 10h30 : chiens de plus de 9 mois<br />
-          11h00 - 12h00 : chiens de moins de 9 mois<br /><br />
-          <strong>Mercredi</strong><br />
-          17h30 - 18h30 : sur demande
+          11h00 - 12h00 : chiens de moins de 9 mois<br />
+          Mercredi : 17h30 - 18h30 sur demande
         </div>
       </div>
     </div>
@@ -420,7 +419,7 @@ function Contact() {
 export default function App() {
   const [tab, setTab] = useState(0);
 
-    const screens = [
+  const screens = [
     <Home setTab={setTab} />,
     <News />,
     <Agenda />,
