@@ -1,38 +1,21 @@
 import { initializeApp } from "firebase/app";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FB_API_KEY,
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "cec-sailly-app.firebaseapp.com",
-  projectId: "cec-sailly-app",
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
   storageBucket: "cec-sailly-app.firebasestorage.app",
-  messagingSenderId: process.env.REACT_APP_FB_SENDER_ID,
-  appId: process.env.REACT_APP_FB_APP_ID
+  messagingSenderId: "441381487733",
+  appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
 const app = initializeApp(firebaseConfig);
-const messaging = getMessaging(app);
+export const db = getFirestore(app);
 
-export const requestNotificationPermission = async () => {
-  try {
-    const permission = await Notification.requestPermission();
-    if (permission === "granted") {
-      const token = await getToken(messaging, {
-        vapidKey: process.env.REACT_APP_VAPID_KEY
-      });
-      console.log("Token FCM:", token);
-      return token;
-    }
-  } catch (error) {
-    console.error("Erreur notification:", error);
-  }
-};
+export const addNews = (item) => addDoc(collection(db, "news"), item);
+export const deleteNews = (id) => deleteDoc(doc(db, "news", id));
+export const addEvent = (item) => addDoc(collection(db, "events"), item);
+export const deleteEvent = (id) => deleteDoc(doc(db, "events", id));
 
-export const onMessageListener = () =>
-  new Promise((resolve) => {
-    onMessage(messaging, (payload) => {
-      resolve(payload);
-    });
-  });
-
-export default messaging;
+export { onSnapshot, collection, query, orderBy };
