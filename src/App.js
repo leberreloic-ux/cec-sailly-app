@@ -258,59 +258,28 @@ function Agenda({ events, setEvents }) {
 }
 
 function Facebook() {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-  const PAGE_ID = "587854675045442";
-  const TOKEN = process.env.REACT_APP_FB_TOKEN;
-
-  useState(() => {
-    fetch(`https://graph.facebook.com/v19.0/${PAGE_ID}/posts?fields=message,created_time,likes.summary(true),comments.summary(true)&access_token=${TOKEN}`)
-      .then(r => r.json())
-      .then(data => {
-        if (data.data) { setPosts(data.data.slice(0, 5)); }
-        else { setError(true); }
-        setLoading(false);
-      })
-      .catch(() => { setError(true); setLoading(false); });
-  }, []);
-
-  const formatDate = (d) => {
-    const date = new Date(d);
-    return date.toLocaleDateString("fr-FR", { day: "numeric", month: "long" });
-  };
-
   return (
     <div style={S.page}>
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
         <div style={{ width: 28, height: 28, borderRadius: "50%", background: "#1877f2", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 14, fontWeight: "bold" }}>f</div>
         <h2 style={S.title}>Page Facebook</h2>
-        <span style={{ marginLeft: "auto", fontSize: 11, fontWeight: 500, padding: "2px 8px", borderRadius: 999, color: "#be185d", background: "#fce7f3" }}>En direct</span>
       </div>
-      <div style={{ borderRadius: 12, padding: "8px 12px", fontSize: 12, border: "1px solid #f9a8d4", background: "#fce7f3", color: "#be185d" }}>
-        Connecté à : <strong>CEC Sailly-sur-la-Lys</strong>
+      <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid #e5e7eb", background: "white" }}>
+        <iframe
+          src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fcecsaillysurlalys&tabs=timeline&width=380&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false&appId"
+          width="100%"
+          height="500"
+          style={{ border: "none", overflow: "hidden", display: "block" }}
+          scrolling="no"
+          frameBorder="0"
+          allowFullScreen
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+          title="Page Facebook CEC"
+        />
       </div>
-      {loading && <div style={{ textAlign: "center", padding: 32, color: "#9ca3af" }}>🐾 Chargement des posts…</div>}
-      {error && <div style={{ textAlign: "center", padding: 32, color: "#9ca3af", fontSize: 14 }}>Impossible de charger les posts.<br />Vérifiez le token Facebook.</div>}
-      {posts.map(p => (
-        <div key={p.id} style={{ ...S.card, display: "flex", flexDirection: "column", gap: 8 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <div style={{ width: 32, height: 32, borderRadius: "50%", background: "linear-gradient(135deg,#6b7280,#ec4899)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 11, fontWeight: "bold" }}>CEC</div>
-            <div>
-              <div style={{ fontSize: 12, fontWeight: 600, color: "#1f2937" }}>CEC Sailly-sur-la-Lys</div>
-              <div style={{ fontSize: 11, color: "#9ca3af" }}>{formatDate(p.created_time)}</div>
-            </div>
-          </div>
-          <p style={{ fontSize: 14, color: "#374151", lineHeight: 1.5 }}>{p.message}</p>
-          <div style={{ display: "flex", gap: 16, paddingTop: 8, borderTop: "1px solid #f9fafb" }}>
-            <span style={{ fontSize: 12, color: "#9ca3af" }}>👍 {p.likes?.summary?.total_count || 0}</span>
-            <span style={{ fontSize: 12, color: "#9ca3af" }}>💬 {p.comments?.summary?.total_count || 0}</span>
-          </div>
-        </div>
-      ))}
       <a href="https://www.facebook.com/cecsaillysurlalys" target="_blank" rel="noreferrer"
         style={{ display: "block", width: "100%", padding: 10, borderRadius: 12, color: "white", fontSize: 14, fontWeight: 500, textAlign: "center", background: "#1877f2", textDecoration: "none" }}>
-        Voir la page complète
+        Ouvrir sur Facebook
       </a>
     </div>
   );
