@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { db, addNews, deleteNews, addEvent, deleteEvent, onSnapshot, collection, query, orderBy } from "./firebase";
+import { db, addNews, deleteNews, addEvent, deleteEvent, onSnapshot, collection, query, orderBy, requestNotifPermission, onMessageListener } from "./firebase";
 
 const TABS = ["Accueil", "Actus", "Agenda", "Facebook", "Carte", "Astuces", "Contact"];
 const ICONS = ["🏠", "🔔", "📅", "📘", "💳", "💡", "📞"];
