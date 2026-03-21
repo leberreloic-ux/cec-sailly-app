@@ -424,7 +424,7 @@ export default function App() {
     requestNotifPermission().catch(() => {});
     onMessageListener().then(payload => {
       if (payload && payload.notification) {
-        alert(payload.notification.title + "\n" + payload.notification.body);
+        alert(payload.notification.title + " - " + payload.notification.body);
       }
     }).catch(() => {});
   }, []);
