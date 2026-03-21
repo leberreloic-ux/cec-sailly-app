@@ -420,6 +420,17 @@ function Contact() {
 export default function App() {
   const [tab, setTab] = useState(0);
 
+  useEffect(() => {
+    requestNotifPermission();
+    onMessageListener().then(payload => {
+      if (payload && payload.notification) {
+        alert("🔔 " + payload.notification.title + "\n" + payload.notification.body);
+      }
+    }).catch(() => {});
+  }, []);
+
+  const screens = [
+
   const screens = [
     <Home setTab={setTab} />,
     <News />,
