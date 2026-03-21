@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { db, addNews, deleteNews, addEvent, deleteEvent, onSnapshot, collection, query, orderBy } from "./firebase";
 
 const TABS = ["Accueil", "Actus", "Agenda", "Facebook", "Carte", "Astuces", "Contact"];
 const ICONS = ["🏠", "🔔", "📅", "📘", "💳", "💡", "📞"];
@@ -32,14 +33,6 @@ const S = {
   overlay: { position: "fixed", top: 0, left: 0, right: 0, bottom: 0, background: "rgba(0,0,0,0.5)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 50, padding: 16 },
   modal: { background: "white", borderRadius: 24, padding: 24, width: "100%", maxWidth: 320, display: "flex", flexDirection: "column", gap: 12 },
 };
-
-function save(key, data) {
-  try { window.localStorage.setItem(key, JSON.stringify(data)); } catch(e) {}
-}
-
-function load(key) {
-  try { const v = window.localStorage.getItem(key); return v ? JSON.parse(v) : null; } catch(e) { return null; }
-}
 
 function PinModal({ onSuccess, onCancel }) {
   const [pin, setPin] = useState("");
@@ -100,8 +93,8 @@ function Home({ setTab }) {
   return (
     <div style={S.page}>
       <div style={{ borderRadius: 16, padding: 16, background: "linear-gradient(135deg,#f9fafb,#fce7f3)", border: "1px solid #f9a8d4" }}>
-        <p style={{ fontWeight: "bold", fontSize: 14, color: "#be185d" }}>Bienvenue ! 👋</p>
-        <p style={{ fontSize: 12, color: "#6b7280", marginTop: 4 }}>CEC Sailly-sur-la-Lys — Club d'Education Canine</p>
+        <p style={{ fontWeight: "bold", fontSize: 14, color: "#be185d" }}>Bienvenue !</p>
+        <p style={{ fontSize: 12, color: "#6b7280", marginTop: 4 }}>CEC Sailly-sur-la-Lys - Club d'Education Canine</p>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
         {[
@@ -119,45 +112,48 @@ function Home({ setTab }) {
         ))}
       </div>
       <button onClick={() => setTab(6)} style={{ width: "100%", padding: 12, borderRadius: 12, color: "white", fontSize: 14, fontWeight: 500, background: "linear-gradient(135deg,#6b7280,#ec4899)", border: "none", cursor: "pointer" }}>
-        📞 Contacter le president
+        Contacter le president
       </button>
     </div>
   );
 }
 
-function News({ news, setNews }) {
+function News() {
+  const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState(null);
   const [showPin, setShowPin] = useState(false);
   const [pinAction, setPinAction] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ title: "", body: "", tag: "Info" });
 
+  useEffect(() => {
+    const q = query(collection(db, "news"), orderBy("createdAt", "desc"));
+    const unsub = onSnapshot(q, (snap) => {
+      setNews(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+      setLoading(false);
+    });
+    return unsub;
+  }, []);
+
   const askPin = (action) => { setPinAction(() => action); setShowPin(true); };
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     if (!form.title || !form.body) return;
     const today = new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
-    const updated = [{ id: Date.now(), date: today, ...form }, ...news];
-    setNews(updated);
-    save("cec_news", updated);
+    await addNews({ ...form, date: today, createdAt: Date.now() });
     setForm({ title: "", body: "", tag: "Info" });
     setShowForm(false);
-  };
-
-  const handleDelete = (id) => {
-    const updated = news.filter(x => x.id !== id);
-    setNews(updated);
-    save("cec_news", updated);
-    setExpanded(null);
   };
 
   return (
     <div style={S.page}>
       <div style={S.row}>
-        <h2 style={S.title}>🔔 Actualites</h2>
+        <h2 style={S.title}>Actualites</h2>
         <button style={S.btnPink} onClick={() => askPin(() => setShowForm(true))}>+ Ajouter</button>
       </div>
-      {news.length === 0 && <div style={{ ...S.card, textAlign: "center", color: "#9ca3af", fontSize: 14, padding: 32 }}>Aucune actualite pour le moment</div>}
+      {loading && <div style={{ textAlign: "center", padding: 32, color: "#9ca3af" }}>Chargement...</div>}
+      {!loading && news.length === 0 && <div style={{ ...S.card, textAlign: "center", color: "#9ca3af", fontSize: 14, padding: 32 }}>Aucune actualite pour le moment</div>}
       {news.map(n => (
         <button key={n.id} onClick={() => setExpanded(expanded === n.id ? null : n.id)}
           style={{ ...S.card, width: "100%", textAlign: "left", cursor: "pointer", display: "flex", flexDirection: "column", gap: 4 }}>
@@ -169,7 +165,7 @@ function News({ news, setNews }) {
           {expanded === n.id
             ? <div style={{ fontSize: 12, color: "#4b5563", lineHeight: 1.6 }}>{n.body}
                 <div style={{ marginTop: 8 }}>
-                  <button onClick={e => { e.stopPropagation(); askPin(() => handleDelete(n.id)); }}
+                  <button onClick={e => { e.stopPropagation(); askPin(() => deleteNews(n.id)); }}
                     style={{ fontSize: 12, color: "#f87171", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}>Supprimer</button>
                 </div>
               </div>
@@ -203,38 +199,41 @@ function News({ news, setNews }) {
   );
 }
 
-function Agenda({ events, setEvents }) {
+function Agenda() {
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState(null);
   const [showPin, setShowPin] = useState(false);
   const [pinAction, setPinAction] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ date: "", day: "", title: "", time: "", place: "" });
 
+  useEffect(() => {
+    const q = query(collection(db, "events"), orderBy("createdAt", "asc"));
+    const unsub = onSnapshot(q, (snap) => {
+      setEvents(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+      setLoading(false);
+    });
+    return unsub;
+  }, []);
+
   const askPin = (action) => { setPinAction(() => action); setShowPin(true); };
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     if (!form.title || !form.date) return;
-    const updated = [...events, { ...form, id: Date.now() }];
-    setEvents(updated);
-    save("cec_events", updated);
+    await addEvent({ ...form, createdAt: Date.now() });
     setForm({ date: "", day: "", title: "", time: "", place: "" });
     setShowForm(false);
-  };
-
-  const handleDelete = (id) => {
-    const updated = events.filter(x => x.id !== id);
-    setEvents(updated);
-    save("cec_events", updated);
-    setSelected(null);
   };
 
   return (
     <div style={S.page}>
       <div style={S.row}>
-        <h2 style={S.title}>📅 Agenda du club</h2>
+        <h2 style={S.title}>Agenda du club</h2>
         <button style={S.btnPink} onClick={() => askPin(() => setShowForm(true))}>+ Ajouter</button>
       </div>
-      {events.length === 0 && <div style={{ ...S.card, textAlign: "center", color: "#9ca3af", fontSize: 14, padding: 32 }}>Aucun evenement pour le moment</div>}
+      {loading && <div style={{ textAlign: "center", padding: 32, color: "#9ca3af" }}>Chargement...</div>}
+      {!loading && events.length === 0 && <div style={{ ...S.card, textAlign: "center", color: "#9ca3af", fontSize: 14, padding: 32 }}>Aucun evenement pour le moment</div>}
       {events.map(e => (
         <button key={e.id} onClick={() => setSelected(selected === e.id ? null : e.id)}
           style={{ ...S.card, width: "100%", textAlign: "left", cursor: "pointer" }}>
@@ -249,7 +248,7 @@ function Agenda({ events, setEvents }) {
               {selected === e.id && (
                 <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 4 }}>
                   {e.place && <div style={{ fontSize: 12, color: "#4b5563" }}>📍 {e.place}</div>}
-                  <button onClick={ev => { ev.stopPropagation(); askPin(() => handleDelete(e.id)); }}
+                  <button onClick={ev => { ev.stopPropagation(); askPin(() => deleteEvent(e.id)); }}
                     style={{ fontSize: 12, color: "#f87171", background: "none", border: "none", cursor: "pointer", textDecoration: "underline", textAlign: "left" }}>Supprimer</button>
                 </div>
               )}
@@ -318,7 +317,7 @@ function MemberCard() {
   };
   return (
     <div style={S.page}>
-      <h2 style={S.title}>💳 Ma Carte de Membre</h2>
+      <h2 style={S.title}>Ma Carte de Membre</h2>
       <p style={{ fontSize: 12, color: "#6b7280" }}>Prenez en photo votre carte de membre pour la retrouver rapidement.</p>
       <input ref={fileRef} type="file" accept="image/*" capture="environment" style={{ display: "none" }} onChange={handleFile} />
       {photo ? (
@@ -351,7 +350,7 @@ function Astuces() {
   return (
     <div style={S.page}>
       <div style={S.row}>
-        <h2 style={S.title}>💡 Trucs et Astuces</h2>
+        <h2 style={S.title}>Trucs et Astuces</h2>
         <a href="https://www.cec-saillysurlalys.com/blog" target="_blank" rel="noreferrer"
           style={{ fontSize: 12, padding: "6px 12px", borderRadius: 999, color: "white", fontWeight: 500, background: "linear-gradient(135deg,#ec4899,#be185d)", textDecoration: "none" }}>Voir le blog</a>
       </div>
@@ -384,7 +383,7 @@ function Astuces() {
 function Contact() {
   return (
     <div style={S.page}>
-      <h2 style={S.title}>📞 Contact</h2>
+      <h2 style={S.title}>Contact</h2>
       <div style={{ ...S.card, display: "flex", alignItems: "center", gap: 16 }}>
         <div style={{ width: 48, height: 48, borderRadius: "50%", fontSize: 24, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, background: "#fce7f3" }}>👨‍💼</div>
         <div style={{ flex: 1 }}>
@@ -395,7 +394,7 @@ function Contact() {
         <a href="tel:0622859646" style={{ width: 44, height: 44, borderRadius: "50%", background: "linear-gradient(135deg,#ec4899,#be185d)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, flexShrink: 0, textDecoration: "none" }}>📞</a>
       </div>
       <div style={{ ...S.card, display: "flex", flexDirection: "column", gap: 12 }}>
-        <div style={{ fontSize: 14, fontWeight: 600, color: "#374151" }}>📍 Adresse</div>
+        <div style={{ fontSize: 14, fontWeight: 600, color: "#374151" }}>Adresse</div>
         <div style={{ fontSize: 14, color: "#4b5563" }}>Rue de la Gare<br />62840 Sailly-sur-la-Lys</div>
         <a href="https://share.google/FciL3IbUO1iIXCVdV" target="_blank" rel="noreferrer"
           style={{ display: "block", width: "100%", padding: 10, borderRadius: 12, color: "white", fontSize: 14, fontWeight: 500, textAlign: "center", background: "linear-gradient(135deg,#6b7280,#9ca3af)", textDecoration: "none" }}>
@@ -403,9 +402,9 @@ function Contact() {
         </a>
       </div>
       <div style={{ ...S.card, display: "flex", flexDirection: "column", gap: 8 }}>
-        <div style={{ fontSize: 14, fontWeight: 600, color: "#374151" }}>📧 Email</div>
+        <div style={{ fontSize: 14, fontWeight: 600, color: "#374151" }}>Email</div>
         <a href="mailto:saillysurlalys.cec@gmail.com" style={{ fontSize: 14, color: "#ec4899", wordBreak: "break-all", textDecoration: "none" }}>saillysurlalys.cec@gmail.com</a>
-        <div style={{ fontSize: 14, fontWeight: 600, color: "#374151", marginTop: 8 }}>🕐 Horaires d'entrainement</div>
+        <div style={{ fontSize: 14, fontWeight: 600, color: "#374151", marginTop: 8 }}>Horaires d'entrainement</div>
         <div style={{ fontSize: 14, color: "#4b5563", lineHeight: 1.8 }}>
           <strong>Dimanche matin</strong><br />
           09h30 - 10h30 : chiens de plus de 9 mois<br />
@@ -420,20 +419,11 @@ function Contact() {
 
 export default function App() {
   const [tab, setTab] = useState(0);
-  const [news, setNews] = useState([]);
-  const [events, setEvents] = useState([]);
-
-  useEffect(() => {
-    const savedNews = load("cec_news");
-    const savedEvents = load("cec_events");
-    if (savedNews) setNews(savedNews);
-    if (savedEvents) setEvents(savedEvents);
-  }, []);
 
   const screens = [
     <Home setTab={setTab} />,
-    <News news={news} setNews={setNews} />,
-    <Agenda events={events} setEvents={setEvents} />,
+    <News />,
+    <Agenda />,
     <Facebook />,
     <MemberCard />,
     <Astuces />,
