@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy } from "firebase/firestore";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -12,6 +13,27 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
+export const messaging = getMessaging(app);
+
+export const requestNotifPermission = async () => {
+  try {
+    const permission = await Notification.requestPermission();
+    if (permission === "granted") {
+      const token = await getToken(messaging, {
+        vapidKey: process.env.REACT_APP_VAPID_KEY
+      });
+      return token;
+    }
+  } catch(e) {
+    console.log("Notif non supportées", e);
+  }
+  return null;
+};
+
+export const onMessageListener = () =>
+  new Promise((resolve) => {
+    onMessage(messaging, (payload) => resolve(payload));
+  });
 
 export const addNews = (item) => addDoc(collection(db, "news"), item);
 export const deleteNews = (id) => deleteDoc(doc(db, "news", id));
