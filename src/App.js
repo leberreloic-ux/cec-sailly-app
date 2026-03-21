@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { db, addNews, deleteNews, addEvent, deleteEvent, onSnapshot, collection, query, orderBy, requestNotifPermission, onMessageListener } from "./firebase";
+import { db, addNews, deleteNews, addEvent, deleteEvent, onSnapshot, collection, query, orderBy } from "./firebase";
 
 const TABS = ["Accueil", "Actus", "Agenda", "Facebook", "Carte", "Astuces", "Contact"];
 const ICONS = ["🏠", "🔔", "📅", "📘", "💳", "💡", "📞"];
@@ -420,16 +420,7 @@ function Contact() {
 export default function App() {
   const [tab, setTab] = useState(0);
 
-  useEffect(() => {
-    requestNotifPermission().catch(() => {});
-    onMessageListener().then(payload => {
-      if (payload && payload.notification) {
-        alert(payload.notification.title + " - " + payload.notification.body);
-      }
-    }).catch(() => {});
-  }, []);
-
-  const screens = [
+    const screens = [
     <Home setTab={setTab} />,
     <News />,
     <Agenda />,
