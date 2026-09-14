@@ -224,13 +224,31 @@
             <p class="eyebrow dark"><span></span> La vie du club</p>
             <h2>Le CEC en images</h2>
           </div>
-          <p>Entraînements, concours et temps forts&nbsp;: ouvrez les mêmes albums Google Photos que dans l’application du club.</p>
+          <p>Une photo à la une, puis un accès simple à tous les albums du club. La liste reste claire même lorsqu’elle s’agrandit.</p>
         </div>
 
-        <div class="gallery-grid" data-gallery-grid aria-live="polite" aria-busy="true">
-          <article class="gallery-skeleton" aria-hidden="true"><span></span><span></span><span></span></article>
-          <article class="gallery-skeleton" aria-hidden="true"><span></span><span></span><span></span></article>
-          <article class="gallery-skeleton" aria-hidden="true"><span></span><span></span><span></span></article>
+        <div class="gallery-layout" data-gallery-root aria-busy="true">
+          <div class="gallery-feature" data-gallery-feature>
+            <div class="gallery-feature-skeleton" aria-hidden="true"><span></span></div>
+          </div>
+
+          <div class="gallery-directory">
+            <div class="gallery-directory-head">
+              <div>
+                <small>Albums du club</small>
+                <h3>Toutes les galeries</h3>
+              </div>
+              <span class="gallery-count" data-gallery-count aria-label="Nombre de galeries">…</span>
+            </div>
+            <div class="gallery-list" data-gallery-list aria-live="polite">
+              <div class="gallery-row-skeleton" aria-hidden="true"><span></span><span></span></div>
+              <div class="gallery-row-skeleton" aria-hidden="true"><span></span><span></span></div>
+              <div class="gallery-row-skeleton" aria-hidden="true"><span></span><span></span></div>
+              <div class="gallery-row-skeleton" aria-hidden="true"><span></span><span></span></div>
+              <div class="gallery-row-skeleton" aria-hidden="true"><span></span><span></span></div>
+            </div>
+            <button class="gallery-more" type="button" data-gallery-more aria-expanded="false" hidden>Afficher toutes les galeries</button>
+          </div>
         </div>
         <p class="gallery-feedback" data-gallery-feedback>Connexion aux galeries du club…</p>
       </div>
@@ -301,42 +319,50 @@
         </div>
         <ul class="partner-grid">
           <li>
-            <a class="partner-card" href="https://scarlettandjoyce.fr/" target="_blank" rel="noreferrer">
-              <span class="partner-mark" aria-hidden="true">S&amp;J</span>
+            <a class="partner-card" data-partner-key="empreinte scarlett|scarlett joyce" href="https://scarlettandjoyce.fr/" target="_blank" rel="noreferrer">
+              <span class="partner-logo" aria-hidden="true"><span>S&amp;J</span><img data-partner-logo src="https://www.google.com/s2/favicons?domain=scarlettandjoyce.fr&amp;sz=128" alt="" width="64" height="64" loading="lazy"></span>
               <span><strong>L’Empreinte de Scarlett</strong><small>Scarlett &amp; Joyce · accessoires canins</small></span>
               <span class="partner-arrow" aria-hidden="true">↗</span>
             </a>
           </li>
           <li>
-            <a class="partner-card" href="https://www.lescohettes.com/" target="_blank" rel="noreferrer">
-              <span class="partner-mark" aria-hidden="true">LC</span>
+            <a class="partner-card" data-partner-key="les cohettes|cohettes" href="https://www.lescohettes.com/" target="_blank" rel="noreferrer">
+              <span class="partner-logo" aria-hidden="true"><span>LC</span><img data-partner-logo src="https://www.google.com/s2/favicons?domain=lescohettes.com&amp;sz=128" alt="" width="64" height="64" loading="lazy"></span>
               <span><strong>Les Cohettes</strong><small>Gîtes &amp; chambres d’hôtes</small></span>
               <span class="partner-arrow" aria-hidden="true">↗</span>
             </a>
           </li>
           <li>
-            <a class="partner-card" href="https://doggycation.fr/" target="_blank" rel="noreferrer">
-              <span class="partner-mark" aria-hidden="true">DC</span>
+            <a class="partner-card" data-partner-key="doggy cation|doggycation" href="https://doggycation.fr/" target="_blank" rel="noreferrer">
+              <span class="partner-logo" aria-hidden="true"><span>DC</span><img data-partner-logo src="https://www.google.com/s2/favicons?domain=doggycation.fr&amp;sz=128" alt="" width="64" height="64" loading="lazy"></span>
               <span><strong>Doggy’Cation</strong><small>Éducation canine</small></span>
               <span class="partner-arrow" aria-hidden="true">↗</span>
             </a>
           </li>
           <li>
-            <a class="partner-card" href="https://desmalouxdesflandres.chiens-de-france.com/" target="_blank" rel="noreferrer">
-              <span class="partner-mark" aria-hidden="true">MF</span>
+            <a class="partner-card" data-partner-key="maloux des flandres|maloux flandres" href="https://desmalouxdesflandres.chiens-de-france.com/" target="_blank" rel="noreferrer">
+              <span class="partner-logo" aria-hidden="true"><span>MF</span><img data-partner-logo src="https://www.google.com/s2/favicons?domain=desmalouxdesflandres.chiens-de-france.com&amp;sz=128" alt="" width="64" height="64" loading="lazy"></span>
               <span><strong>Les Maloux des Flandres</strong><small>Élevage de Bergers Belges</small></span>
               <span class="partner-arrow" aria-hidden="true">↗</span>
             </a>
           </li>
           <li>
-            <a class="partner-card" href="https://www.weenect.com/fr/fr/" target="_blank" rel="noreferrer">
-              <span class="partner-mark weenect" aria-hidden="true">W</span>
+            <a class="partner-card" data-partner-key="weenect" href="https://www.weenect.com/fr/fr/" target="_blank" rel="noreferrer">
+              <span class="partner-logo" aria-hidden="true"><span>W</span><img data-partner-logo src="https://www.google.com/s2/favicons?domain=weenect.com&amp;sz=128" alt="" width="64" height="64" loading="lazy"></span>
               <span><strong>Weenect</strong><small>Traceurs GPS pour chiens et chats</small></span>
+              <span class="partner-arrow" aria-hidden="true">↗</span>
+            </a>
+          </li>
+          <li>
+            <a class="partner-card" data-partner-key="france croquettes|francecroquettes" href="https://francecroquettes.com/" target="_blank" rel="noreferrer">
+              <span class="partner-logo" aria-hidden="true"><span>FC</span><img data-partner-logo src="https://www.google.com/s2/favicons?domain=francecroquettes.com&amp;sz=128" alt="" width="64" height="64" loading="lazy"></span>
+              <span><strong>France Croquettes</strong><small>Alimentation pour chiens et chats</small></span>
               <span class="partner-arrow" aria-hidden="true">↗</span>
             </a>
           </li>
         </ul>
       </div>
+
     </section>
 
     <section class="contact" id="contact">
