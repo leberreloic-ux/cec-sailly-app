@@ -308,6 +308,15 @@ h3 { font-size: 1.55rem; margin-bottom: 12px; }
 .partner-card > span:nth-child(2) { min-width: 0; display: flex; flex-direction: column; }
 .partner-card strong { font-family: Georgia, "Times New Roman", serif; font-size: 1.16rem; line-height: 1.25; }
 .partner-card small { margin-top: 4px; color: var(--ink-soft); font-size: 11px; }
+.partner-products { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.partner-product {
+  display: inline-flex; align-items: center; gap: 5px; padding: 4px 8px; border-radius: 999px;
+  color: var(--forest); background: var(--sage); font-size: 10px; font-weight: 850; line-height: 1;
+}
+.partner-product svg {
+  width: 14px; height: 14px; flex: 0 0 auto; fill: none; stroke: var(--accent-dark);
+  stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+}
 .partner-arrow { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; color: var(--accent-dark); background: #fde7f0; font-weight: 900; }
 
 .contact { padding: 110px 0; color: var(--white); background: var(--accent-dark); }
