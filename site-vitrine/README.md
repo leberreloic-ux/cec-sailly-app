@@ -11,7 +11,7 @@ Ouvrir \`site-vitrine/index.html\` avec un serveur statique. Le site ne modifie 
 - accueil et proposition de valeur ;
 - horaires d’éducation du chiot et du chien adulte ;
 - checklist pour une première séance ;
-- disciplines : Obéissance, Ring, IGP et Sauvetage ;
+- disciplines : Obéissance, Ring et IGP ;
 - calendrier 2026 avec statut automatique des événements ;
 - présentation du club, partenaires et contacts ;
 - navigation mobile, accessibilité de base et métadonnées SEO.
