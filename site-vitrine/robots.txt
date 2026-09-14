@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cec-saillysurlalys.com/sitemap.xml
