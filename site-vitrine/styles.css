@@ -170,22 +170,41 @@ h3 { font-size: 1.55rem; margin-bottom: 12px; }
 .checklist small { color: rgba(255,255,255,.58); font-size: 11px; }
 
 .disciplines { background: var(--cream); }
-.discipline-grid { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; background: var(--white); }
-.discipline-card { min-height: 320px; padding: 30px; border-right: 1px solid var(--line); transition: transform .25s ease, background .25s ease; }
+.discipline-grid { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; background: var(--white); }
+.discipline-card { min-height: 510px; padding: 34px; border-right: 1px solid var(--line); transition: transform .25s ease, background .25s ease; }
 .discipline-card:last-child { border-right: 0; }
 .discipline-card:hover { background: #f8f3f5; }
 .discipline-card.featured { color: var(--white); background: var(--accent); }
 .discipline-icon { width: 50px; height: 50px; display: grid; place-items: center; border-radius: 50%; color: var(--accent-dark); background: #fde7f0; font-size: 22px; }
 .featured .discipline-icon { color: var(--white); background: rgba(255,255,255,.18); }
-.discipline-index { margin: 58px 0 14px; color: var(--ink-soft); font-size: 11px; font-weight: 900; letter-spacing: .16em; }
-.featured .discipline-index, .featured > p:last-child { color: rgba(255,255,255,.7); }
-.discipline-card > p:last-child { color: var(--ink-soft); font-size: 14px; }
+.discipline-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 48px; }
+.discipline-index { margin: 0; color: var(--ink-soft); font-size: 11px; font-weight: 900; letter-spacing: .16em; }
+.featured .discipline-index { color: rgba(255,255,255,.7); }
+.discipline-tag { margin-bottom: 10px; color: var(--accent-dark); font-size: 11px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+.featured .discipline-tag { color: rgba(255,255,255,.72); }
+.discipline-summary { min-height: 138px; color: var(--ink-soft); font-size: 14px; }
+.featured .discipline-summary { color: rgba(255,255,255,.76); }
+.discipline-details { display: grid; gap: 9px; margin: 24px 0 0; padding: 21px 0 0 18px; border-top: 1px solid var(--line); color: var(--ink-soft); font-size: 13px; line-height: 1.45; }
+.featured .discipline-details { border-color: rgba(255,255,255,.2); color: rgba(255,255,255,.84); }
+.discipline-details li::marker { color: var(--accent); }
+.featured .discipline-details li::marker { color: #fff; }
+.disciplines-note { max-width: 820px; margin: 30px auto 0; padding: 19px 24px; border-radius: 16px; color: var(--ink-soft); background: rgba(255,255,255,.72); text-align: center; font-size: 14px; }
+.disciplines-note strong { color: var(--ink); }
 
 .field-story { padding: 110px 0; color: var(--white); background: var(--forest); overflow: hidden; }
 .field-grid { display: grid; grid-template-columns: .83fr 1.17fr; align-items: center; gap: 90px; }
-.field-photo { position: relative; }
-.field-photo::before { content: ""; position: absolute; left: -32px; top: -32px; width: 130px; height: 130px; border: 1px solid rgba(255,255,255,.25); border-radius: 50%; }
-.field-photo img { position: relative; width: 100%; max-height: 610px; object-fit: cover; border-radius: 180px 24px 24px 24px; box-shadow: 0 35px 65px rgba(0,0,0,.28); }
+.club-emblem {
+  position: relative; min-height: 500px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  overflow: hidden; border: 1px solid rgba(255,255,255,.13); border-radius: 180px 24px 24px 24px;
+  background: linear-gradient(145deg, rgba(255,255,255,.1), rgba(255,255,255,.025));
+  box-shadow: 0 35px 65px rgba(0,0,0,.22);
+}
+.club-emblem::before {
+  content: ""; position: absolute; width: 330px; height: 330px; border: 1px solid rgba(255,255,255,.1); border-radius: 50%;
+}
+.club-emblem img { position: relative; width: 150px; height: 150px; margin-bottom: 26px; object-fit: contain; border-radius: 50%; background: #fff; box-shadow: 0 18px 45px rgba(0,0,0,.22); }
+.club-emblem span, .club-emblem small { position: relative; color: rgba(255,255,255,.58); font-size: 11px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+.club-emblem strong { position: relative; margin: 4px 0; color: #f784b2; font-family: Georgia, "Times New Roman", serif; font-size: 4.7rem; line-height: 1; font-weight: 400; }
 .field-copy blockquote { max-width: 680px; margin: 0 0 28px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.25rem, 4.7vw, 4.5rem); line-height: 1.08; letter-spacing: -.035em; }
 .field-copy > p:not(.eyebrow) { max-width: 610px; color: rgba(255,255,255,.66); }
 .text-link { display: inline-flex; gap: 10px; margin-top: 18px; color: #f784b2; text-decoration: none; font-size: 14px; font-weight: 850; }
@@ -262,9 +281,10 @@ footer { padding: 34px 0; background: #102a23; color: rgba(255,255,255,.62); }
   .photo-frame { aspect-ratio: 1.05; border-radius: 180px 180px 28px 28px; }
   .section-heading, .club-grid, .contact-grid { grid-template-columns: 1fr; gap: 35px; }
   .section-heading > p { max-width: 680px; }
-  .discipline-grid { grid-template-columns: repeat(2, 1fr); }
-  .discipline-card:nth-child(2) { border-right: 0; }
-  .discipline-card:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .discipline-grid { grid-template-columns: 1fr; }
+  .discipline-card { min-height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
+  .discipline-card:last-child { border-bottom: 0; }
+  .discipline-summary { min-height: auto; }
   .first-visit { grid-template-columns: 1fr; gap: 38px; }
   .field-grid { gap: 55px; }
   .club-grid { align-items: start; }
@@ -305,14 +325,15 @@ footer { padding: 34px 0; background: #102a23; color: rgba(255,255,255,.62); }
   .first-visit { padding: 34px 22px; border-radius: 24px; }
   .checklist { grid-template-columns: 1fr; }
   .discipline-grid { grid-template-columns: 1fr; }
-  .discipline-card { min-height: 270px; border-right: 0; border-bottom: 1px solid var(--line); }
-  .discipline-card:nth-child(3) { border-bottom: 1px solid var(--line); }
+  .discipline-card { min-height: 0; padding: 27px 23px; border-right: 0; border-bottom: 1px solid var(--line); }
   .discipline-card:last-child { border-bottom: 0; }
-  .discipline-index { margin-top: 42px; }
+  .discipline-head { margin-bottom: 36px; }
+  .discipline-summary { min-height: 0; }
+  .disciplines-note { padding: 18px; text-align: left; }
   .field-story { padding: 75px 0; }
   .field-grid { grid-template-columns: 1fr; gap: 48px; }
-  .field-photo { max-width: 440px; }
-  .field-photo img { max-height: 480px; border-radius: 100px 20px 20px 20px; }
+  .club-emblem { min-height: 420px; max-width: 440px; border-radius: 100px 20px 20px 20px; }
+  .club-emblem strong { font-size: 4rem; }
   .field-copy blockquote { font-size: clamp(2.15rem, 10.5vw, 3.4rem); }
   .event-card { grid-template-columns: 76px 1fr; gap: 15px; min-height: 135px; padding: 20px 0; }
   .event-card:hover { padding-inline: 0; }
