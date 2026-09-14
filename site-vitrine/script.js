@@ -70,10 +70,17 @@
     reveals.forEach((element) => observer.observe(element));
   }
 
-  const galleryGrid = document.querySelector("[data-gallery-grid]");
+  const galleryRoot = document.querySelector("[data-gallery-root]");
+  const galleryFeature = document.querySelector("[data-gallery-feature]");
+  const galleryList = document.querySelector("[data-gallery-list]");
+  const galleryCount = document.querySelector("[data-gallery-count]");
+  const galleryMore = document.querySelector("[data-gallery-more]");
   const galleryFeedback = document.querySelector("[data-gallery-feedback]");
   const firestoreBase = "https://firestore.googleapis.com/v1/projects/cec-sailly/databases/(default)/documents";
   const firebaseApiKey = "AIzaSyBrAjBL2Ack_c-8vK33304dOlcYknAOmF4";
+  const visibleGalleryCount = 5;
+  let clubAlbums = [];
+  let galleriesExpanded = false;
 
   const decodeFirestoreValue = (value = {}) => {
     if ("stringValue" in value) return value.stringValue;
@@ -113,27 +120,24 @@
   const emptyGalleryPhoto = (photo) => {
     photo.replaceChildren();
     photo.classList.add("is-empty");
-    const label = document.createElement("span");
-    label.textContent = "Album du club";
-    photo.append(label);
   };
 
-  const buildGalleryCard = (album, index) => {
-    const card = document.createElement("a");
-    card.className = "gallery-card";
-    card.href = safeWebUrl(album.albumUrl);
-    card.target = "_blank";
-    card.rel = "noreferrer";
-    card.setAttribute("aria-label", `Ouvrir l’album Google Photos « ${album.title || "Photos du club"} »`);
-    card.style.animationDelay = `${Math.min(index * 70, 350)}ms`;
+  const renderFeaturedGallery = (album) => {
+    if (!galleryFeature) return;
+    const link = document.createElement("a");
+    link.className = "gallery-feature-link";
+    link.href = safeWebUrl(album.albumUrl);
+    link.target = "_blank";
+    link.rel = "noreferrer";
+    link.setAttribute("aria-label", `Ouvrir la galerie « ${album.title || "Photos du club"} »`);
 
     const photo = document.createElement("div");
-    photo.className = "gallery-photo";
+    photo.className = "gallery-feature-photo";
     const imageUrl = safeWebUrl(album.imageUrl);
     if (imageUrl) {
       const image = document.createElement("img");
       image.src = imageUrl;
-      image.alt = album.title ? `Aperçu de l’album ${album.title}` : "Aperçu d’un album du CEC";
+      image.alt = album.title ? `Aperçu de la galerie ${album.title}` : "Aperçu d’une galerie du CEC";
       image.loading = "lazy";
       image.referrerPolicy = "no-referrer";
       image.addEventListener("error", () => emptyGalleryPhoto(photo), { once: true });
@@ -142,56 +146,158 @@
       emptyGalleryPhoto(photo);
     }
 
-    const copy = document.createElement("div");
-    copy.className = "gallery-card-copy";
-    const title = document.createElement("h3");
+    const copy = document.createElement("span");
+    copy.className = "gallery-feature-copy";
+    const label = document.createElement("small");
+    label.textContent = "Galerie à la une";
+    const title = document.createElement("strong");
     title.textContent = album.title || "Photos du club";
-    const description = document.createElement("p");
-    description.textContent = album.description || "Retrouvez les photos de ce temps fort du CEC.";
-    const action = document.createElement("small");
-    action.textContent = "Voir sur Google Photos";
+    const action = document.createElement("span");
+    action.className = "gallery-feature-action";
+    action.textContent = "Voir la galerie ";
     const arrow = document.createElement("span");
-    arrow.className = "gallery-arrow";
     arrow.setAttribute("aria-hidden", "true");
     arrow.textContent = "↗";
-    copy.append(title, description, action, arrow);
-    card.append(photo, copy);
-    return card;
+    action.append(arrow);
+    copy.append(label, title, action);
+    link.append(photo, copy);
+    galleryFeature.replaceChildren(link);
   };
+
+  const buildGalleryRow = (album, index) => {
+    const link = document.createElement("a");
+    link.className = "gallery-row";
+    link.href = safeWebUrl(album.albumUrl);
+    link.target = "_blank";
+    link.rel = "noreferrer";
+    link.style.animationDelay = `${Math.min(index * 45, 225)}ms`;
+    link.setAttribute("aria-label", `Voir la galerie « ${album.title || "Photos du club"} »`);
+
+    const number = document.createElement("span");
+    number.className = "gallery-row-index";
+    number.textContent = String(index + 1).padStart(2, "0");
+
+    const copy = document.createElement("span");
+    copy.className = "gallery-row-copy";
+    const title = document.createElement("strong");
+    title.textContent = album.title || "Photos du club";
+    const description = document.createElement("small");
+    description.textContent = album.description || "Album photo du CEC";
+    copy.append(title, description);
+
+    const action = document.createElement("span");
+    action.className = "gallery-row-action";
+    action.textContent = "Voir la galerie ";
+    const arrow = document.createElement("span");
+    arrow.setAttribute("aria-hidden", "true");
+    arrow.textContent = "↗";
+    action.append(arrow);
+
+    link.append(number, copy, action);
+    return link;
+  };
+
+  const renderGalleryRows = () => {
+    if (!galleryList) return;
+    const visibleAlbums = galleriesExpanded ? clubAlbums : clubAlbums.slice(0, visibleGalleryCount);
+    galleryList.replaceChildren(...visibleAlbums.map(buildGalleryRow));
+
+    if (galleryMore) {
+      const remaining = Math.max(clubAlbums.length - visibleGalleryCount, 0);
+      galleryMore.hidden = remaining === 0;
+      galleryMore.setAttribute("aria-expanded", String(galleriesExpanded));
+      galleryMore.textContent = galleriesExpanded
+        ? "Réduire la liste"
+        : `Afficher les ${remaining} autre${remaining > 1 ? "s" : ""} galerie${remaining > 1 ? "s" : ""}`;
+    }
+  };
+
+  if (galleryMore) {
+    galleryMore.addEventListener("click", () => {
+      galleriesExpanded = !galleriesExpanded;
+      renderGalleryRows();
+    });
+  }
 
   const showGalleryFallback = () => {
-    if (!galleryGrid) return;
-    const fallback = document.createElement("div");
-    fallback.className = "gallery-fallback";
-    const title = document.createElement("strong");
-    title.textContent = "Les galeries prennent leur temps…";
-    const text = document.createElement("span");
-    text.textContent = "Elles restent disponibles dans l’application du club. Réessayez dans quelques instants.";
-    fallback.append(title, text);
-    galleryGrid.replaceChildren(fallback);
-    galleryGrid.setAttribute("aria-busy", "false");
-    if (galleryFeedback) galleryFeedback.textContent = "Impossible de charger les albums pour le moment.";
+    if (galleryFeature) {
+      const empty = document.createElement("div");
+      empty.className = "gallery-feature-photo is-empty";
+      galleryFeature.replaceChildren(empty);
+    }
+    if (galleryList) {
+      const fallback = document.createElement("div");
+      fallback.className = "gallery-fallback";
+      const title = document.createElement("strong");
+      title.textContent = "Les galeries prennent leur temps…";
+      const text = document.createElement("span");
+      text.textContent = "Réessayez dans quelques instants ou consultez-les dans l’application du club.";
+      fallback.append(title, text);
+      galleryList.replaceChildren(fallback);
+    }
+    if (galleryRoot) galleryRoot.setAttribute("aria-busy", "false");
+    if (galleryCount) galleryCount.textContent = "0";
+    if (galleryFeedback) galleryFeedback.textContent = "Impossible de charger les galeries pour le moment.";
   };
 
-  if (galleryGrid) {
+  if (galleryRoot) {
     loadPublicCollection("gallery")
       .then((albums) => {
-        const publishedAlbums = albums
+        clubAlbums = albums
           .filter((album) => album.published !== false && safeWebUrl(album.albumUrl))
           .sort((a, b) => (Number(a.order) || 999) - (Number(b.order) || 999) || String(a.title || "").localeCompare(String(b.title || ""), "fr"));
 
-        if (!publishedAlbums.length) {
+        if (!clubAlbums.length) {
           showGalleryFallback();
           return;
         }
 
-        galleryGrid.replaceChildren(...publishedAlbums.map(buildGalleryCard));
-        galleryGrid.setAttribute("aria-busy", "false");
+        const featuredAlbum = clubAlbums.find((album) => safeWebUrl(album.imageUrl)) || clubAlbums[0];
+        renderFeaturedGallery(featuredAlbum);
+        renderGalleryRows();
+        galleryRoot.setAttribute("aria-busy", "false");
+        if (galleryCount) galleryCount.textContent = String(clubAlbums.length);
         if (galleryFeedback) {
-          galleryFeedback.textContent = `${publishedAlbums.length} album${publishedAlbums.length > 1 ? "s" : ""} — cliquez sur une photo pour ouvrir Google Photos.`;
+          galleryFeedback.textContent = `${clubAlbums.length} galerie${clubAlbums.length > 1 ? "s" : ""} disponible${clubAlbums.length > 1 ? "s" : ""}.`;
         }
       })
       .catch(showGalleryFallback);
   }
+
+  const normalizePartnerName = (value) =>
+    String(value || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, " ")
+      .trim();
+
+  const partnerCards = [...document.querySelectorAll("[data-partner-key]")];
+  document.querySelectorAll("[data-partner-logo]").forEach((image) => {
+    image.addEventListener("error", () => image.classList.add("is-broken"));
+    image.addEventListener("load", () => image.classList.remove("is-broken"));
+  });
+
+  if (partnerCards.length) {
+    loadPublicCollection("partners")
+      .then((partners) => {
+        partners
+          .filter((partner) => partner.published !== false && safeWebUrl(partner.logoUrl))
+          .forEach((partner) => {
+            const partnerName = normalizePartnerName(partner.name);
+            if (!partnerName) return;
+            const card = partnerCards.find((item) =>
+              String(item.dataset.partnerKey || "")
+                .split("|")
+                .map(normalizePartnerName)
+                .some((key) => partnerName.includes(key) || key.includes(partnerName))
+            );
+            const image = card && card.querySelector("[data-partner-logo]");
+            if (image) image.src = safeWebUrl(partner.logoUrl);
+          });
+      })
+      .catch(() => {});
+  }
+
 
 })();
