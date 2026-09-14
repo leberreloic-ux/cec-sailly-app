@@ -107,6 +107,13 @@
     }
   };
 
+  const safeImageUrl = (value) => {
+    if (typeof value !== "string" || !value.trim()) return "";
+    const imageUrl = value.trim();
+    if (/^data:image\/(?:jpeg|png|webp|gif);base64,/i.test(imageUrl)) return imageUrl;
+    return safeWebUrl(imageUrl);
+  };
+
   const loadPublicCollection = async (name) => {
     const url = new URL(`${firestoreBase}/${name}`);
     url.searchParams.set("pageSize", "100");
@@ -273,6 +280,11 @@
       .trim();
 
   const partnerCards = [...document.querySelectorAll("[data-partner-key]")];
+  const partnerNameMatches = (partnerName, key) => {
+    const partnerWords = new Set(partnerName.split(" ").filter(Boolean));
+    const keyWords = normalizePartnerName(key).split(" ").filter(Boolean);
+    return keyWords.length > 0 && keyWords.every((word) => partnerWords.has(word));
+  };
   document.querySelectorAll("[data-partner-logo]").forEach((image) => {
     image.addEventListener("error", () => image.classList.add("is-broken"));
     image.addEventListener("load", () => image.classList.remove("is-broken"));
@@ -282,18 +294,17 @@
     loadPublicCollection("partners")
       .then((partners) => {
         partners
-          .filter((partner) => partner.published !== false && safeWebUrl(partner.logoUrl))
+          .filter((partner) => partner.published !== false && safeImageUrl(partner.logoUrl))
           .forEach((partner) => {
             const partnerName = normalizePartnerName(partner.name);
             if (!partnerName) return;
             const card = partnerCards.find((item) =>
               String(item.dataset.partnerKey || "")
                 .split("|")
-                .map(normalizePartnerName)
-                .some((key) => partnerName.includes(key) || key.includes(partnerName))
+                .some((key) => partnerNameMatches(partnerName, key))
             );
             const image = card && card.querySelector("[data-partner-logo]");
-            if (image) image.src = safeWebUrl(partner.logoUrl);
+            if (image) image.src = safeImageUrl(partner.logoUrl);
           });
       })
       .catch(() => {});
