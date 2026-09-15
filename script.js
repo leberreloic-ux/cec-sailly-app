@@ -78,7 +78,7 @@
   const galleryFeedback = document.querySelector("[data-gallery-feedback]");
   const firestoreBase = "https://firestore.googleapis.com/v1/projects/cec-sailly/databases/(default)/documents";
   const firebaseApiKey = "AIzaSyBrAjBL2Ack_c-8vK33304dOlcYknAOmF4";
-  const galleryFallbackImage = "https://static.wixstatic.com/media/32e8f0_3523640701ce481f8552fe07cab97bb6~mv2.jpg/v1/crop/x_0%2Cy_250%2Cw_3433%2Ch_4650/fill/w_1200%2Ch_1450%2Cal_c%2Cq_85/IMG_0438.jpg";
+  const galleryFallbackImage = "./images/galerie-csau.webp";
   const visibleGalleryCount = 5;
   let clubAlbums = [];
   let galleriesExpanded = false;
