@@ -162,6 +162,12 @@ h3 { font-size: 1.55rem; margin-bottom: 12px; }
 .first-visit h2 { font-size: clamp(2.1rem, 4vw, 3.5rem); margin-bottom: 18px; }
 .first-visit-intro > p:not(.eyebrow) { color: rgba(255,255,255,.66); }
 .first-visit-intro > a { display: inline-block; margin-top: 14px; color: #f784b2; font-size: 14px; font-weight: 800; text-decoration: none; }
+.membership-fees { display: grid; gap: 10px; margin: 28px 0 20px; }
+.membership-fees > p { margin: 0 0 2px; color: rgba(255,255,255,.72); font-size: 12px; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
+.membership-fee { display: flex; align-items: center; gap: 16px; min-height: 66px; padding: 12px 15px; border: 1px solid rgba(255,255,255,.1); border-radius: 16px; background: rgba(255,255,255,.075); }
+.membership-fee > strong { min-width: 72px; color: #f784b2; font-size: 1.35rem; line-height: 1; }
+.membership-fee > span { display: flex; flex-direction: column; color: var(--white); font-size: 14px; font-weight: 800; line-height: 1.35; }
+.membership-fee small { margin-top: 3px; color: rgba(255,255,255,.58); font-size: 11px; font-weight: 500; }
 .checklist { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 0; padding: 0; list-style: none; }
 .checklist li { display: flex; align-items: center; gap: 12px; min-height: 82px; padding: 15px; border-radius: 16px; background: rgba(255,255,255,.075); border: 1px solid rgba(255,255,255,.09); }
 .checklist li > span { width: 30px; height: 30px; display: grid; place-items: center; flex: 0 0 auto; border-radius: 50%; color: var(--white); background: var(--accent); font-size: 13px; font-weight: 900; }
