@@ -531,3 +531,38 @@ footer { padding: 34px 0; background: #102a23; color: rgba(255,255,255,.62); }
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+
+/* Visitor pathways: reuse the club palette, typography and button system. */
+.dog-pathways { padding-bottom: 0; }
+.pathway-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.pathway-card { display: flex; flex-direction: column; min-width: 0; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--cream); }
+.pathway-card h3 { font-size: 1.55rem; line-height: 1.2; }
+.pathway-card > p:not(.pathway-label) { color: var(--ink-soft); }
+.pathway-label { display: flex; align-items: center; gap: 10px; color: var(--forest); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+.pathway-label span { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--sage); }
+.pathway-card .pathway-time { margin-top: auto; padding-top: 14px; font-size: 14px; }
+.pathway-button { width: 100%; min-height: 48px; padding: 13px 16px; background: var(--forest); color: var(--white); text-align: center; line-height: 1.4; }
+.pathway-button:hover { background: var(--forest-2); }
+.visit-preparation { min-width: 0; }
+.visit-preparation > p { color: rgba(255,255,255,.8); }
+.visit-preparation .checklist { align-content: start; }
+.visit-preparation .checklist small { color: rgba(255,255,255,.8); font-size: 12px; }
+.visit-steps { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,.2); padding-top: 28px; }
+.visit-steps ol { margin: 20px 0 28px; padding-left: 24px; }
+.visit-steps li { padding: 5px 0 5px 6px; }
+.visit-steps li::marker { color: #f784b2; font-weight: 800; }
+.visit-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.visit-actions .button { min-height: 48px; text-align: center; }
+.footer-meta .site-credit { margin: 0; font-size: 11px; }
+@media (max-width: 1000px) {
+  .pathway-card { padding: 22px; }
+  .pathway-button { font-size: 13px; }
+}
+@media (max-width: 760px) {
+  .pathway-grid { grid-template-columns: 1fr; }
+  .pathway-card { padding: 26px 22px; }
+  .pathway-button { font-size: 14px; }
+  .visit-actions { flex-direction: column; }
+  .visit-actions .button { width: 100%; }
+}
