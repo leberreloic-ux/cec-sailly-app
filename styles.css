@@ -362,7 +362,7 @@ footer { padding: 34px 0; background: #102a23; color: rgba(255,255,255,.62); }
 .footer-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 30px; }
 .footer-brand { justify-self: start; }
 .footer-grid p { margin: 0; font-size: 11px; text-align: center; }
-.footer-meta { display: grid; justify-items: center; gap: 5px; }
+.footer-meta { display: flex; flex-direction: column; align-items: center; gap: 10px; min-width: 0; line-height: 1.6; text-align: center; }
 .footer-meta a { color: rgba(255,255,255,.76); font-size: 11px; font-weight: 750; text-decoration: underline; text-underline-offset: 3px; }
 .footer-grid > a:last-child { justify-self: end; color: rgba(255,255,255,.76); text-decoration: none; font-size: 12px; font-weight: 800; }
 
@@ -440,7 +440,7 @@ footer { padding: 34px 0; background: #102a23; color: rgba(255,255,255,.62); }
   .partner-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .contact-grid { gap: 50px; }
   .footer-grid { grid-template-columns: 1fr auto; }
-  .footer-grid p { grid-column: 1/-1; grid-row: 2; text-align: left; }
+  .footer-grid > p { grid-column: 1/-1; grid-row: 2; text-align: left; }
 }
 
 @media (max-width: 700px) {
@@ -511,7 +511,7 @@ footer { padding: 34px 0; background: #102a23; color: rgba(255,255,255,.62); }
   .social-links { flex-wrap: wrap; }
   .contact-card a { padding-left: 22px; }
   .footer-grid { display: flex; flex-wrap: wrap; justify-content: space-between; }
-  .footer-grid p { order: 3; width: 100%; }
+  .footer-grid > p { order: 3; width: 100%; }
   .footer-meta { width: 100%; order: 3; }
   .legal-nav .brand-copy { display: none; }
   .legal-back { padding: 9px 13px; font-size: 12px; }
@@ -565,4 +565,14 @@ footer { padding: 34px 0; background: #102a23; color: rgba(255,255,255,.62); }
   .pathway-button { font-size: 14px; }
   .visit-actions { flex-direction: column; }
   .visit-actions .button { width: 100%; }
+}
+
+/* Keep each footer credit on its own line on narrow screens. */
+@media (max-width: 680px) {
+  footer:not(.legal-footer) .footer-grid { flex-direction: column; align-items: center; gap: 22px; }
+  footer:not(.legal-footer) .footer-brand { justify-content: center; }
+  footer:not(.legal-footer) .footer-meta { order: 2; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.12); }
+  footer:not(.legal-footer) .footer-grid > a:last-child { order: 3; padding: 10px 16px; }
+  .footer-meta p { width: 100%; text-align: center; }
+  .footer-meta > a { padding: 8px 0; }
 }
